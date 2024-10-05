@@ -1,5 +1,7 @@
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
+
 
 class Controller {
     CharacterManager characterManager = new CharacterManager();
@@ -23,19 +25,15 @@ class Controller {
         holyBierGame.setVisible(true);
         holyBierGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        
-
-    }
-
-    /*
-    newGameButton.addActionListener((ActionEvent e) -> {
+        newGameButton.addActionListener((ActionEvent e) -> {
             holyBierGame.getContentPane().removeAll();
             holyBierGame.revalidate();
             holyBierGame.repaint();
             this.startNewGame();
         });
 
---------------------------------------------------------------
+    }
+
     void startNewGame() {
         holyBierGame.getContentPane().removeAll();
         holyBierGame.revalidate();
@@ -48,12 +46,7 @@ class Controller {
 
         holyBierGame.add(panel);
     }
-
-
-    */
-
     
-
     public static void main(String[] args) {
         new Controller().startUp();
     }

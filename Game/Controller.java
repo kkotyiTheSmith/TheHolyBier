@@ -15,13 +15,14 @@ class Controller {
         panel.setBackground(Color.black);
         
         JButton newGameButton = new JButton("New Game ->");
-        newGameButton.setBounds(0, 0, 50, 50);
+        newGameButton.setBounds(200, 0, 50, 50);
         newGameButton.setBackground(Color.GREEN);
         
         panel.add(newGameButton);
         
         holyBierGame.add(panel);
         
+        holyBierGame.setLayout(null);
         holyBierGame.setVisible(true);
         holyBierGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

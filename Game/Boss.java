@@ -1,0 +1,3 @@
+class Boss extends Character{
+    
+}

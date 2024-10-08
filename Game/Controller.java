@@ -1,38 +1,21 @@
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 
 class Controller {
     CharacterManager characterManager = new CharacterManager();
+    Scene currentScene;
     JFrame holyBierGame = new JFrame("The Holy Bier");
 
     void startUp() {
         holyBierGame.setSize(500, 500);
-
-        JPanel panel = new JPanel();
-        panel.setBounds(100, 100, 200, 200);
-        panel.setBackground(Color.black);
+        currentScene = new Scene();
         
-        JButton newGameButton = new JButton("New Game ->");
-        newGameButton.setBounds(200, 0, 50, 50);
-        newGameButton.setBackground(Color.GREEN);
-        
-        panel.add(newGameButton);
-        
-        holyBierGame.add(panel);
+        holyBierGame.add(currentScene.startUpScene());
         
         holyBierGame.setLayout(null);
         holyBierGame.setVisible(true);
         holyBierGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        newGameButton.addActionListener((ActionEvent e) -> {
-            holyBierGame.getContentPane().removeAll();
-            holyBierGame.revalidate();
-            holyBierGame.repaint();
-            this.startNewGame();
-        });
-
     }
 
     void startNewGame() {

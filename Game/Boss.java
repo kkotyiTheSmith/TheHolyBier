@@ -1,3 +1,3 @@
-class Boss extends Character{
+class Boss extends GCharacter{
     
 }

@@ -1,11 +1,23 @@
 abstract class GCharacter {
-    String name;
-    int level;
-    int health;
-    int damage;
+    protected String name;
+    protected int level;
+    protected int health;
+    protected int damage;
+
+    String getName() {
+        return name;
+    }
 
     int getCurrentDamage() {
         return damage + level;
+    }
+
+    int getLevel() {
+        return level;
+    }
+
+    int getHealth() {
+        return health;
     }
 
     void lowerHp(int dmg) {

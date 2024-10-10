@@ -1,7 +1,21 @@
 public class Player extends GCharacter {
-    void Player() {
-        this.level = 1;
-        this.health = 10;
-        this.damage = 2;
+    Item[] items;
+
+    public Player() {
+        level = 1;
+        health = 100;
+        damage = 10;
+        items = new Item[3];
+        items[0] = new Hand();
+        items[1] = new Hand();
+        items[2] = new Hand();
+    }
+
+    void changeItem(int n, Item i) {
+        items[n] = i;
+    }
+
+    Item getItem(int slot) {
+        return items[slot];
     }
 }

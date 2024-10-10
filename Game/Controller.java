@@ -202,11 +202,48 @@ class Controller {
     }
 
     void bossRoomScene() {
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
+        panel.setBackground(basicBackground);
+        panel.setLayout(null);
 
+        int buttonWidth = holyBierGame.getWidth()/3 - holyBierGame.getHeight()/30;
+        int buttonHeight = holyBierGame.getHeight()/3;
+        int buttonY = holyBierGame.getHeight() * 3/5;
+
+        JButton fight = new JButton("Fight");
+        fight.setBounds(holyBierGame.getWidth()/70, buttonY, buttonWidth, buttonHeight);
+        fight.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+        JButton heal = new JButton("Heal");
+        heal.setBounds(2 * holyBierGame.getWidth()/70 + buttonWidth, buttonY, buttonWidth, buttonHeight);
+        heal.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+        JButton escape = new JButton("Escape");
+        escape.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
+        escape.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        panel.add(fight);
+        panel.add(heal);
+        panel.add(escape);
+        
+        holyBierGame.add(panel);
+
+        fight.addActionListener((ActionEvent e) -> {
+            reload();
+        });
+
+        heal.addActionListener((ActionEvent e) -> {
+            reload();
+            PathChose();
+        });
+
+        escape.addActionListener((ActionEvent e) -> {
+            reload();
+            PathChose();
+        });
     }
 
     void thePub() {
-        
+
     }
 
     public static void main(String[] args) {

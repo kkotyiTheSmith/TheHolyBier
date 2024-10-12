@@ -24,6 +24,10 @@ abstract class Item {
     float getCritChance() {
         return critChance;
     }
+
+    Item generateNewItem() {
+        return new Hand(); // TODO for J - Here a random Item should be generated.
+    }
 }
 
 class Hand extends Item {

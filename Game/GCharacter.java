@@ -1,12 +1,7 @@
 abstract class GCharacter {
-    protected String name;
     protected int level;
     protected int health;
     protected int damage;
-
-    String getName() {
-        return name;
-    }
 
     int getCurrentDamage() {
         return damage + level;
@@ -25,7 +20,11 @@ abstract class GCharacter {
     }
 
     void dealDamageTo(int dmg, GCharacter c) {
-        c.health -= this.getCurrentDamage();
+        c.lowerHp(this.getCurrentDamage());
+    }
+
+    void increaseHealt(int h) {
+        this.health += h;
     }
 
 }

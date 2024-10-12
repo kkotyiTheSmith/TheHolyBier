@@ -6,6 +6,7 @@ class Controller {
     JFrame holyBierGame = new JFrame("The Holy Bier");
     Color basicBackground = new Color(197, 165, 94);
     Player player = new Player();
+    Boss boss;
 
     void reload() {
         holyBierGame.getContentPane().removeAll();
@@ -100,7 +101,7 @@ class Controller {
         int buttonHeight = holyBierGame.getHeight()/3 - holyBierGame.getHeight()/30;
         int buttonX = holyBierGame.getWidth() * 2/3;
 
-        Item newItem = new Hand(); // TODO Here we should generate a new item here.
+        Item newItem = player.items[0].generateNewItem();
 
         JButton itemRoom = new JButton("<html>Item room\n Cost: " + newItem.getCost());
         itemRoom.setBounds(buttonX, holyBierGame.getHeight()/70, buttonWidth, buttonHeight);
@@ -126,6 +127,7 @@ class Controller {
         
         bossRoom.addActionListener((ActionEvent e) -> {
             reload();
+            boss = new Boss(); 
             bossRoomScene();
         });
         
@@ -136,6 +138,11 @@ class Controller {
     }
 
     void itemRoomScene(Item newItem) {
+        if (player.getHealth() <= 0) {
+            youDied();
+        } else if (boss !=null && boss.getHealth() <= 0) {
+            // TODO for K - killed the boss screen
+        }
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
@@ -229,20 +236,34 @@ class Controller {
 
         fight.addActionListener((ActionEvent e) -> {
             reload();
+            player.dealDamageTo(player.getCurrentDamage(), boss); // TODO for K - this mechanics should be changed later
+            boss.dealDamageTo(boss.getCurrentDamage(), player);
+            bossRoomScene();
         });
 
         heal.addActionListener((ActionEvent e) -> {
             reload();
-            PathChose();
+            player.increaseHealt(10); // TODO for K - change to designed mechanic later
+            boss.dealDamageTo(boss.getCurrentDamage(), player);
+            bossRoomScene();
         });
 
         escape.addActionListener((ActionEvent e) -> {
+            boss.dealDamageTo(boss.getCurrentDamage(), player);
+            if (player.getHealth() <= 0) {
+                reload();
+                youDied();
+            }
             reload();
             PathChose();
         });
     }
 
-    void thePub() {
+    void thePub() { // TODO for K - Create the pub.
+
+    }
+
+    void youDied() {
 
     }
 

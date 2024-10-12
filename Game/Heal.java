@@ -9,6 +9,10 @@ abstract class Heal {
     int getHealAmount() {
         return healAmount;
     }
+
+    Heal generateNewHeal() {
+        return new EmptyBottle(); // TODO for J - genereate a new random healing item here
+    }
 }
 
 class EmptyBottle extends Heal {

@@ -35,8 +35,9 @@ class Controller {
         start.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
         
         /*
-        ImagePanel newGameScreen = new ImagePanel("graphics/MainScreen/MainScreen.jpg");
+        ImagePanel newGameScreen = new ImagePanel("graphics/MainScreen/background.jpg");
         newGameScreen.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
+        panel.add(newGameScreen);
         */
         
         

@@ -101,7 +101,7 @@ class Controller {
         int buttonHeight = holyBierGame.getHeight()/3 - holyBierGame.getHeight()/30;
         int buttonX = holyBierGame.getWidth() * 2/3;
 
-        Item newItem = player.items[0].generateNewItem();
+        Item newItem = player.items[0].generateNewhand();
 
         JButton itemRoom = new JButton("<html>Item room\n Cost: " + newItem.getCost());
         itemRoom.setBounds(buttonX, holyBierGame.getHeight()/70, buttonWidth, buttonHeight);

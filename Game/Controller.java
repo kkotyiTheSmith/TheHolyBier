@@ -243,7 +243,7 @@ class Controller {
 
         heal.addActionListener((ActionEvent e) -> {
             reload();
-            player.increaseHealt(10); // TODO for K - change to designed mechanic later
+            player.increaseHealth(10); // TODO for K - change to designed mechanic later
             boss.dealDamageTo(boss.getCurrentDamage(), player);
             bossRoomScene();
         });

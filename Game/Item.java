@@ -86,8 +86,8 @@ abstract class Item {
                 case 3: return spear;
         }
         */
-    }
 }
+
     
 
 

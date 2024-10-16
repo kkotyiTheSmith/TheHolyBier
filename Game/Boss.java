@@ -12,25 +12,25 @@ class Boss extends GCharacter{
 
         Random rand = new Random();
 
-        this.name = "Test Boss";
-        this.level = 1; //getRoomLevel(); // Have to create a function which returns the level of the room the boss is in;
+        name = "Test Boss";
+        level = 1; //getRoomLevel(); // Have to create a function which returns the level of the room the boss is in;
                         // or just a variable that can be accesed by all programs.
 
         int randNum = rand.nextInt(10) + 100;
-        this.hp = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
-        this.health = this.hp;
+        hp = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
+        health = hp;
 
         randNum = rand.nextInt(10) + 100;
-        this.damage = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
+        damage = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
 
-        this.xpWorth = (this.damage + this.hp) / 2;
-        this.coinWorth = 10;
+        xpWorth = (damage + hp) / 2;
+        coinWorth = 10;
 
         if (level % 20 == 0){
-            this.hp = this.hp * 2;
-            this.damage = this.damage * 2;
-            this.xpWorth = this.xpWorth * 3;
-            this.coinWorth = this.coinWorth * 3;
+            hp = hp * 2;
+            damage = damage * 2;
+            xpWorth = xpWorth * 3;
+            coinWorth = coinWorth * 3;
         }
     }
 

@@ -1,15 +1,15 @@
 abstract class GCharacter {
     protected long level;
-    protected long hp;
     protected long health;
-    protected long damage;
+    protected long hp;
+    protected long damage; 
 
     long getLevel() {
         return level;
     }
 
-    long getHp() {
-        return hp;
+    long getHp() { // Never used, honestly I don't get why we need this.
+        return health;
     }
 
     long getHealth() {
@@ -28,15 +28,10 @@ abstract class GCharacter {
     }
 
     void dealDamageTo(long dmg, GCharacter c) {
-        c.lowerHp(this.getCurrentDamage());
+        c.lowerHp(dmg);
     }
 
-    void increaseHealth(long h) {
-        this.health += h;
-        if (this.health > hp) {
-            this.health = hp;
-        }
-    }
+    
 
 }
 

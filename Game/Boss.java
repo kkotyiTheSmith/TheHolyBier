@@ -1,12 +1,22 @@
 import java.util.Random;
-import java.io.*;
-import java.util.*;
-import java.lang.Math.*;
 
 class Boss extends GCharacter{
     String name;
-    long xpWorth;
+    long xpWorth; // both should be int
     long coinWorth;
+
+    String getName() {
+        return name;
+    }
+
+    int getXp() {
+        return (int) xpWorth;
+    }
+
+    int getGold() {
+        return (int) coinWorth;
+    }
+
 
     public Boss() { // TODO for J - Generate a new random boss here.
 
@@ -18,10 +28,10 @@ class Boss extends GCharacter{
 
         int randNum = rand.nextInt(10) + 100;
         hp = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
-        health = hp;
+        health = 100;//hp;
 
         randNum = rand.nextInt(10) + 100;
-        damage = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
+        damage = 1;//Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
 
         xpWorth = (damage + hp) / 2;
         coinWorth = 10;

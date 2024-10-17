@@ -31,7 +31,7 @@ class Boss extends GCharacter{
         health = 100;//hp;
 
         randNum = rand.nextInt(10) + 100;
-        damage = 1;//Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
+        damage = 100;//Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
 
         xpWorth = (damage + hp) / 2;
         coinWorth = 10;

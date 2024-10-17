@@ -477,7 +477,7 @@ class Controller {
             "<html>You died! :( <html>"
         );
         reload();
-        textScreen(youDied);
+        textScreen(youDied); // TODO dont return to path chose
     }
 
     Item generateNewItem() {

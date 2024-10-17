@@ -13,10 +13,10 @@ abstract class Item {
     boolean unique;
     float critChance;
 
-    Boolean oneShot = false;
-    Boolean damageNull = false;
-    Boolean doubleDmg = false;
-    Boolean lifeSteal = false;
+    Boolean oneShot;
+    Boolean damageNull;
+    Boolean doubleDmg;
+    Boolean lifeSteal;
 
     String getName() {
         return this.name;
@@ -38,118 +38,65 @@ abstract class Item {
         return critChance;
     }
 
-    Item generateNewhand() {
-            Random rand = new Random();
-            Boolean isUnique = false;
-
-
-            Item hand = new Hand();
-            Item uniqueHand = new UniqueHand();
-
-            hand.unique = false;
-            uniqueHand.unique = true;
-
-            String[] handTypeArray = new String[]{"sword","axe","grenade","spear"};
-            int randNum = rand.nextInt(4);
-            String handType = handTypeArray[randNum];
-    
-            randNum = rand.nextInt(100)+1;
-    
-            if (handType.equals("sword")) {
-    
-                hand.name = "Sword";
-    
-                randNum = rand.nextInt(51) + 100;
-                hand.hp = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 100;
-                hand.armor = Math.round(((Math.pow(Math.E, level)-1)/ 75)*randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 100;                
-                hand.damage = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10 , 4) / 75);
-
-            } else if (handType.equals("axe")) {
-    
-                hand.name = "Axe";
-    
-                randNum = rand.nextInt(51) + 125;
-                hand.hp = Math.round((Math.pow(Math.E + (Math.E / 4), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 75;
-                hand.armor = Math.round((Math.pow(Math.E - (Math.E / 2), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 125;
-                hand.damage = Math.round((Math.pow(Math.E + (Math.E / 4), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-    
-            } else if (handType.equals("grenade")) {
-    
-                hand.name = "Grenade";
-    
-                randNum = rand.nextInt(51) + 50;
-                hand.hp = Math.round((Math.pow(Math.E - (Math.E / 2), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 50;
-                hand.armor = Math.round((Math.pow(Math.E - (Math.E / 2), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 200;
-                hand.damage = Math.round((Math.pow(Math.E * 2, 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-                
-            } else {
-    
-                hand.name = "Spear";
-    
-                randNum = rand.nextInt(51) + 125;
-                hand.hp = Math.round((Math.pow(Math.E + (Math.E / 4), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 125;
-                hand.armor = Math.round((Math.pow(Math.E + (Math.E / 4), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
-                randNum = rand.nextInt(51) + 50;
-                hand.damage = Math.round((Math.pow(Math.E - (Math.E / 2), 0.05 * level)-1) * randNum * Math.pow(10,4) / 75);
+    int rarityCalc() {
         
-            }
-    
-            hand.type = handType;
-            hand.level = level;
-            
-            if (randNum >= 76 && randNum <= 95) {
-                hand.hp = hand.hp * 2;
-                hand.armor = hand.armor * 2;
-                hand.damage = hand.damage * 2;
-            } else if(randNum >= 6 && randNum <= 99) {
-                hand.hp = hand.hp * 3;
-                hand.armor = hand.armor * 3;
-                hand.damage = hand.damage * 3;
-            } else if (randNum == 100) {
-    
-                isUnique = true;
-    
-                uniqueHand.type = handType;
-                uniqueHand.level = level;
-    
-                uniqueHand.hp = hand.hp * 5;
-                uniqueHand.armor = hand.armor * 5;
-                uniqueHand.damage = hand.damage * 5;
-    
-                if (handType.equals("sword")) {
-                    uniqueHand.name = "UniqueSword";
-                    uniqueHand.lifeSteal = true;
-                } else if (handType.equals("axe")) {
-                    uniqueHand.name = "UniqueAxe";
-                    uniqueHand.doubleDmg = true;
-                } else if (handType.equals("grenade")) {
-                    uniqueHand.name = "UniqueGrenade";
-                    uniqueHand.oneShot = true;
-                } else {
-                    uniqueHand.name = "UniqueSpear";
-                    uniqueHand.damageNull = true;
-                }
-            }   
-            if (isUnique) {
-                return uniqueHand;
-            } else {
-                return hand;
-            }
+        Random rand = new Random();
+        int randNum = rand.nextInt(100)+1;
+
+        if (randNum >= 76 && randNum <= 95) {
+
+            hp = hp * 16;
+            armor = armor * 16 ;
+            damage = damage * 16;
+            critChance = critChance * 2;
+
+        } else if(randNum >= 96 && randNum <= 99) {
+
+            hp = hp * 256;
+            armor = armor * 256;
+            damage = damage * 256;
+            critChance = critChance * 3;
+
+        } else if (randNum == 100) {
+            hp = hp * 4000;
+            armor = armor * 4000;
+            damage = damage * 4000;
+            critChance = critChance * 5;
+
+        }
+        return randNum;
     }
+
+        /* Instead of function, run the program in the main code
+        Item generateNewItem() {
+
+            Item sword = new Sword();
+            Item axe = new Axe();
+            Item grenade = new Grenade();
+            Item spear = new Spear();
+
+            Random rand = new Random();
+
+            int randNum = rand.nextInt(4);
+        
+            switch(randNum){
+                case 0: return sword;
+                case 1: return axe;
+                case 2: return grenade;
+                case 3: return spear;
+        }
+        */
 }
+
+    
+
+
 
 class Hand extends Item {
     public Hand() {
         name = "Hand";
         type = "None";
-        level = 0;
+        level = 1;
         hp = 0;
         armor = 0;
         damage = 10;
@@ -157,22 +104,150 @@ class Hand extends Item {
         unique = false;
         critChance = 0.1f;
 
-    }
-}
-
-class UniqueHand extends Item {
-
-    public UniqueHand() {
-        name = "Hand";
-        cost = 0;
-        level = 0;
-        damage = 10;
-        critChance = 0.1f;
-        
         oneShot = false;
         damageNull = false;
         doubleDmg = false;
         lifeSteal = false;
+
     }
 }
 
+class Sword extends Item {
+    public Sword() {
+        name = "Sword";
+        type = "sword";
+        level = 1; // create variable that keeps track of levels in main program for this
+        unique = false;
+
+        oneShot = false;
+        damageNull = false;
+        doubleDmg = false;
+        lifeSteal = false;
+
+        Random rand = new Random();
+        int randNum;
+
+        randNum = rand.nextInt(11) + 100;
+        hp = Math.round((Math.pow(Math.E, 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 100;
+        armor = Math.round((Math.pow(Math.E, 0.05 * level) - 1) *randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 100;                
+        damage = Math.round((Math.pow(Math.E, 0.05 * level) - 1) * randNum * Math.pow(10 , 4) / 75);
+
+        cost = 0;
+        critChance = 0.1f;
+
+        randNum = rarityCalc();
+
+        if (randNum == 100) {
+            unique = true;
+            name = "uniqueSword";
+            lifeSteal = true;
+        }
+
+            
+    }
+}
+
+class Axe extends Item {
+    public Axe() {
+        name = "Axe";
+        type = "axe";
+        level = 1; // create variable that keeps track of levels in main program for this
+        unique = false;
+
+        oneShot = false;
+        damageNull = false;
+        doubleDmg = false;
+        lifeSteal = false;
+
+        Random rand = new Random();
+        int randNum;
+
+        randNum = rand.nextInt(11) + 125;
+        hp = Math.round((Math.pow(Math.E + (Math.E * 0.01), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 75;
+        armor = Math.round((Math.pow(Math.E - (Math.E * 0.02), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 125;
+        damage = Math.round((Math.pow(Math.E + (Math.E * 0.01), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+
+        cost = 0;
+        critChance = 0.1f;
+
+        randNum = rarityCalc();
+
+        if (randNum == 100) {
+            unique = true;
+            name = "uniqueAxe";
+            doubleDmg = true;
+        }
+    }
+}
+
+class Grenade extends Item {
+    public Grenade() {
+        name = "Grenade";
+        type = "grenade";
+        level = 1; // create variable that keeps track of levels in main program for this
+        unique = false;
+
+        oneShot = false;
+        damageNull = false;
+        doubleDmg = false;
+        lifeSteal = false;
+
+        Random rand = new Random();
+        int randNum;
+
+        randNum = rand.nextInt(11) + 50;
+        hp = Math.round((Math.pow(Math.E - (Math.E * 0.02), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 50;
+        armor = Math.round((Math.pow(Math.E - (Math.E *0.02), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 200;
+        damage = Math.round((Math.pow(Math.E + (Math.E * 0.04), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+
+        cost = 0;
+        critChance = 0.1f;
+
+        randNum = rarityCalc();
+
+        if (randNum == 100) {
+            unique = true;
+            name = "uniqueGrenade";
+            oneShot = true;
+        }
+    }
+}
+
+class Spear extends Item {
+    public Spear() {
+        name = "Spear";
+        type = "spear";
+        level = 1; // create variable that keeps track of levels in main program for this
+        unique = false;
+
+        oneShot = false;
+        damageNull = false;
+        doubleDmg = false;
+        lifeSteal = false;
+
+        Random rand = new Random();
+        int randNum;
+
+        randNum = rand.nextInt(11) + 125;
+        hp = Math.round((Math.pow(Math.E + (Math.E  * 0.01), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 125;
+        armor = Math.round((Math.pow(Math.E + (Math.E * 0.01), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(11) + 50;
+        damage = Math.round((Math.pow(Math.E - (Math.E * 0.02), 0.05 * level) - 1) * randNum * Math.pow(10,4) / 75);
+
+        cost = 0;
+        critChance = 0.1f;
+
+        if (randNum == 100) {
+            unique = true;
+            name = "uniqueSpear";
+            damageNull = true;
+        }
+    }
+}

@@ -1,30 +1,41 @@
 abstract class GCharacter {
-    protected int level;
-    protected int health;
-    protected int damage;
+    protected long level;
+    protected long hp;
+    protected long health;
+    protected long damage;
 
-    int getCurrentDamage() {
-        return damage + level;
-    }
-
-    int getLevel() {
+    long getLevel() {
         return level;
     }
 
-    int getHealth() {
+    long getHp() {
+        return hp;
+    }
+
+    long getHealth() {
         return health;
     }
-
-    void lowerHp(int dmg) {
-        this.health -= dmg;
+    
+    long getCurrentDamage() {
+        return damage;
     }
 
-    void dealDamageTo(int dmg, GCharacter c) {
+    void lowerHp(long dmg) {
+        this.health -= dmg; 
+        if (this.health < 0) {
+            this.health = 0;
+        }
+    }
+
+    void dealDamageTo(long dmg, GCharacter c) {
         c.lowerHp(this.getCurrentDamage());
     }
 
-    void increaseHealt(int h) {
+    void increaseHealth(long h) {
         this.health += h;
+        if (this.health > hp) {
+            this.health = hp;
+        }
     }
 
 }

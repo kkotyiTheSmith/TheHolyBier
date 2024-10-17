@@ -1,6 +1,4 @@
-import java.io.*;
 import java.util.*;
-import java.lang.Math.*;
 
 abstract class Item {
     String name;
@@ -66,31 +64,7 @@ abstract class Item {
         }
         return randNum;
     }
-
-        /* Instead of function, run the program in the main code
-        Item generateNewItem() {
-
-            Item sword = new Sword();
-            Item axe = new Axe();
-            Item grenade = new Grenade();
-            Item spear = new Spear();
-
-            Random rand = new Random();
-
-            int randNum = rand.nextInt(4);
-        
-            switch(randNum){
-                case 0: return sword;
-                case 1: return axe;
-                case 2: return grenade;
-                case 3: return spear;
-        }
-        */
 }
-
-    
-
-
 
 class Hand extends Item {
     public Hand() {

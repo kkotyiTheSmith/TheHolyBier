@@ -3,19 +3,29 @@ import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
 
+/*
+ * The Holy Bier game developed by Kornél and Javier.
+ * The current file Controller.java is in charge of handling the the GUI, changing scenes.
+ * Scenes are represented as functions in class Controller. These scenes make a chain that
+ * esentially is the game itself. The chain starts at startUp() and always ends with youDied().
+ * This is the only start and end that is possible. (Note: closing the game doesen't bring up
+ * the youDied() scene).
+ * 
+ */
+
 class Controller {
-    JFrame holyBierGame = new JFrame("The Holy Bier");
-    Color basicBackground = new Color(197, 165, 94);
+    JFrame holyBierGame = new JFrame("The Holy Bier"); // The frame with the game, this is permanent.
+    Color basicBackground = new Color(197, 165, 94); 
     Player player = new Player();
     Boss boss;
 
-    void reload() {
+    void reload() { // Used when entering a new scene.
         holyBierGame.getContentPane().removeAll();
         holyBierGame.revalidate();
         holyBierGame.repaint();
     }
     
-    void startUp() {
+    void startUp() { // The game starts with the main screen, represented by startUp().
         holyBierGame.setSize(1000, 700);
         holyBierGame.setLayout(null);
         holyBierGame.setResizable(false);
@@ -35,12 +45,11 @@ class Controller {
         start.setBackground(Color.BLACK);
         start.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
         
-        /*
+        /* // TODO delete in case of handling
         ImagePanel newGameScreen = new ImagePanel("graphics/MainScreen/background.jpg");
         newGameScreen.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.add(newGameScreen);
         */
-        
         
         panel.add(theHolyBierTitle);
         panel.add(start);
@@ -49,7 +58,7 @@ class Controller {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 reload();
-                startNewGame();
+                startNewGame(); 
             }
         });
         
@@ -58,21 +67,24 @@ class Controller {
         holyBierGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    void startNewGame() {
+    void startNewGame() { // Some story and help, to introduce to new players.
+        JLabel intro = new JLabel(
+            "<html>This is a RPG game. Buttons and shit my friend. But don't worry it's not skill based. Enjoy!<html>"
+        );
+        textScreen(intro);
+    }
+
+    void textScreen(JLabel l) { // Displays a JLabel. Used for several purposes.
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
         panel.setLayout(null);
 
-        
-        JLabel intro = new JLabel(
-            "<html>This is a RPG game. Buttons and shit my friend. But don't worry it's not skill based. Enjoy!<html>"
-        );
-        intro.setBounds(50, 50, 800, 500);
-        intro.setBackground(Color.BLACK);
-        intro.setFont(new Font("Press Start 2P", Font.CENTER_BASELINE, 25));
+        l.setBounds(50, 50, 800, 500);
+        l.setBackground(Color.BLACK);
+        l.setFont(new Font("Press Start 2P", Font.CENTER_BASELINE, 25));
 
-        panel.add(intro);
+        panel.add(l);
         holyBierGame.add(panel);
 
         panel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -84,7 +96,7 @@ class Controller {
         });
     }
 
-    void PathChose() {
+    void PathChose() { // We can chose between 3 paths all the time. New item, bossfight and pub.
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
@@ -94,6 +106,7 @@ class Controller {
             "<html>Level: " + player.getLevel() +
             "<br>Healt: " + player.getHealth() +
             "<br>Damage: " + player.getCurrentDamage() +
+            "<br>Gold: " + player.getGold() +
             "<html>"
         );
         stats.setBounds(holyBierGame.getWidth()/20, holyBierGame.getHeight() * 2/3, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
@@ -103,15 +116,16 @@ class Controller {
         int buttonHeight = holyBierGame.getHeight()/3 - holyBierGame.getHeight()/30;
         int buttonX = holyBierGame.getWidth() * 2/3;
 
-        Item newItem = generateNewItem();
+        Item newItem = generateNewItem(); // Generating the items that can be obtained.
+        Heal newHeal = new EmptyBottle().generateNewHeal();
 
-        JButton itemRoom = new JButton("<html>Item room\n Cost: " + newItem.getCost());
+        JButton itemRoom = new JButton("<html>Item room\n Cost: " + newItem.getCost() + "<html>");
         itemRoom.setBounds(buttonX, holyBierGame.getHeight()/70, buttonWidth, buttonHeight);
         itemRoom.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
         JButton bossRoom = new JButton("Boss room");
         bossRoom.setBounds(buttonX, 2 *holyBierGame.getHeight()/70 + buttonHeight, buttonWidth, buttonHeight);
         bossRoom.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
-        JButton pubRoom = new JButton("The Pub!");
+        JButton pubRoom = new JButton("<html>The Pub!\nCost: " + newHeal.getCost() + "<html>");
         pubRoom.setBounds(buttonX, 3 * holyBierGame.getHeight()/70 + 2 * buttonHeight, buttonWidth, buttonHeight);
         pubRoom.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
@@ -124,7 +138,14 @@ class Controller {
         
         itemRoom.addActionListener((ActionEvent e) -> {
             reload();
-            itemRoomScene(newItem);
+            if (player.decreaseGold(newItem.getCost())) {
+                itemRoomScene(newItem);
+            } else {
+                JLabel noGold = new JLabel(
+                    "Not enough gold!"
+                );
+                textScreen(noGold);
+            }
         });
         
         bossRoom.addActionListener((ActionEvent e) -> {
@@ -135,34 +156,36 @@ class Controller {
         
         pubRoom.addActionListener((ActionEvent e) -> {
             reload();
-            thePub();
+            if (player.decreaseGold(newHeal.getCost())) {
+                thePub(newHeal);
+            } else {
+                JLabel noGold = new JLabel(
+                    "Not enough gold!"
+                );
+                textScreen(noGold);
+            }
         });
     }
 
-    void itemRoomScene(Item newItem) {
-        if (player.getHealth() <= 0) {
-            youDied();
-        } else if (boss !=null && boss.getHealth() <= 0) {
-            // TODO for K - killed the boss screen
-        }
+    void itemRoomScene(Item newI) {
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
         panel.setLayout(null);
 
-        JLabel newItemLabel = new JLabel("You found a new item!");
-        newItemLabel.setFont(new Font("Press Start 2P", Font.PLAIN, 40));
-        newItemLabel.setBounds(80, 50, 1000, 100);
+        JLabel newILabel = new JLabel("You found a new item!");
+        newILabel.setFont(new Font("Press Start 2P", Font.PLAIN, 40));
+        newILabel.setBounds(80, 50, 1000, 100);
 
         JLabel changeTo = new JLabel("You can change to one of your items :");
         changeTo.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
         changeTo.setBounds(80, 300, 1000, 100);
 
         JLabel itemStats = new JLabel(
-            "<html>Name: " + newItem.getName() +
-            ",  Level: " + newItem.getLevel() +
-            "<br>Damage: " + newItem.getDamage() +
-            ",  Crit chance: " + newItem.getCritChance() +
+            "<html>Name: " + newI.getName() +
+            ",  Level: " + newI.getLevel() +
+            "<br>Damage: " + newI.getDamage() +
+            ",  Crit chance: " + newI.getCritChance() +
             "<html>"
         );
         itemStats.setFont(new Font("Press Start 2P", Font.PLAIN, 24));
@@ -175,10 +198,10 @@ class Controller {
         JButton choice1 = new JButton(player.getItem(0).getName());
         choice1.setBounds(holyBierGame.getWidth()/70, buttonY, buttonWidth, buttonHeight);
         choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
-        JButton choice2 = new JButton(player.getItem(0).getName());
+        JButton choice2 = new JButton(player.getItem(1).getName());
         choice2.setBounds(2 * holyBierGame.getWidth()/70 + buttonWidth, buttonY, buttonWidth, buttonHeight);
         choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
-        JButton choice3 = new JButton(player.getItem(0).getName());
+        JButton choice3 = new JButton(player.getItem(2).getName());
         choice3.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
         choice3.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
@@ -187,24 +210,24 @@ class Controller {
         panel.add(choice2);
         panel.add(choice3);
         panel.add(changeTo);
-        panel.add(newItemLabel);
+        panel.add(newILabel);
 
         holyBierGame.add(panel);
 
         choice1.addActionListener((ActionEvent e) -> {
-            player.changeItem(0, newItem);
+            player.changeItem(0, newI);
             reload();
             PathChose();
         });
         
         choice2.addActionListener((ActionEvent e) -> {
-            player.changeItem(1, newItem);
+            player.changeItem(1, newI);
             reload();
             PathChose();
         });
         
         choice3.addActionListener((ActionEvent e) -> {
-            player.changeItem(2, newItem);
+            player.changeItem(2, newI);
             reload();
             PathChose();
         });
@@ -230,6 +253,29 @@ class Controller {
         escape.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
         escape.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
+        JLabel statsPlayer = new JLabel(
+            "<html>Player stats: " +
+            "Level: " + player.getLevel() +
+            "<br>Healt: " + player.getHealth() +
+            "<br>Damage: " + player.getCurrentDamage() +
+            "<html>"
+        );
+        statsPlayer.setBounds(holyBierGame.getWidth() * 1/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsPlayer.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        JLabel statsBoss = new JLabel(
+            "<html>Boss stats: " +
+            "Name: " + boss.getName() +
+            "Level: " + boss.getLevel() +
+            "<br>Healt: " + boss.getHealth() +
+            "<br>Damage: " + boss.getCurrentDamage() +
+            "<html>"
+        );
+        statsBoss.setBounds(holyBierGame.getWidth() * 11/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsBoss.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        panel.add(statsBoss);
+        panel.add(statsPlayer);
         panel.add(fight);
         panel.add(heal);
         panel.add(escape);
@@ -238,35 +284,200 @@ class Controller {
 
         fight.addActionListener((ActionEvent e) -> {
             reload();
-            player.dealDamageTo(player.getCurrentDamage(), boss); // TODO for K - this mechanics should be changed later
-            boss.dealDamageTo(boss.getCurrentDamage(), player);
-            bossRoomScene();
+            choseItem();
         });
 
         heal.addActionListener((ActionEvent e) -> {
             reload();
-            player.increaseHealth(10); // TODO for K - change to designed mechanic later
+            player.increaseHealth();
             boss.dealDamageTo(boss.getCurrentDamage(), player);
-            bossRoomScene();
+            if (player.getHealth() == 0) {
+                reload();
+                youDied();
+            } else {
+                bossRoomScene();
+            }
         });
 
         escape.addActionListener((ActionEvent e) -> {
             boss.dealDamageTo(boss.getCurrentDamage(), player);
-            if (player.getHealth() <= 0) {
+            if (player.getHealth() == 0) {
                 reload();
                 youDied();
+            } else {
+                reload();
+                PathChose();
             }
-            reload();
-            PathChose();
         });
     }
 
-    void thePub() { // TODO for K - Create the pub.
+    void checkBossDeath() {
+        if (boss.getHealth() == 0) {
+            reload();
+            JLabel bossKilled = new JLabel(
+            "<html>You killed the boss! Congrats!" +
+            "<br><br>Your reward:" +    
+            "<br><br>Experience: " + boss.getXp() + ",    Gold: " + boss.getGold() +
+            "<html>"
+            );
+            player.increaseGold(boss.getGold());
+            player.incereaseXP(boss.getXp());
+            textScreen(bossKilled); 
+        } else {
+            boss.dealDamageTo(boss.getCurrentDamage(), player);
+            reload();
+            if (player.getHealth() == 0) {
+                youDied();
+            } else {
+                bossRoomScene();
+            }
+        }
+    }
+
+    void choseItem() {
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
+        panel.setBackground(basicBackground);
+        panel.setLayout(null);
+
+        int buttonWidth = holyBierGame.getWidth()/3 - holyBierGame.getHeight()/30;
+        int buttonHeight = holyBierGame.getHeight()/3;
+        int buttonY = holyBierGame.getHeight() * 3/5;
+
+        JButton choice1 = new JButton(player.getItem(0).getName());
+        choice1.setBounds(holyBierGame.getWidth()/70, buttonY, buttonWidth, buttonHeight);
+        choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        JButton choice2 = new JButton(player.getItem(1).getName());
+        choice2.setBounds(2 * holyBierGame.getWidth()/70 + buttonWidth, buttonY, buttonWidth, buttonHeight);
+        choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+        
+        JButton choice3 = new JButton(player.getItem(2).getName());
+        choice3.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
+        choice3.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        JLabel itemToUse = new JLabel("Chose your item to use!");
+        itemToUse.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
+        itemToUse.setBounds(80, 300, 1000, 100);
+
+        JLabel statsPlayer = new JLabel(
+            "<html>Player stats: " +
+            "Level: " + player.getLevel() +
+            "<br>Healt: " + player.getHealth() +
+            "<br>Damage: " + player.getCurrentDamage() +
+            "<html>"
+        );
+        statsPlayer.setBounds(holyBierGame.getWidth() * 1/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsPlayer.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        JLabel statsBoss = new JLabel(
+            "<html>Boss stats: " +
+            "Name: " + boss.getName() +
+            "Level: " + boss.getLevel() +
+            "<br>Healt: " + boss.getHealth() +
+            "<br>Damage: " + boss.getCurrentDamage() +
+            "<html>"
+        );
+        statsBoss.setBounds(holyBierGame.getWidth() * 11/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsBoss.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        panel.add(choice1);
+        panel.add(choice2);
+        panel.add(choice3);
+        panel.add(statsPlayer);
+        panel.add(statsBoss);
+        panel.add(itemToUse);
+
+        holyBierGame.add(panel);
+
+        choice1.addActionListener((ActionEvent e) -> {
+            player.dealDamageTo(player.getItem(0).getDamage(), boss);
+            checkBossDeath();
+        });
+        
+        choice2.addActionListener((ActionEvent e) -> {
+            player.dealDamageTo(player.getItem(1).getDamage(), boss);
+            checkBossDeath();
+        });
+        
+        choice3.addActionListener((ActionEvent e) -> {
+            player.dealDamageTo(player.getItem(2).getDamage(), boss);
+            checkBossDeath();
+        });
+    }
+
+    void thePub(Heal newH) { 
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
+        panel.setBackground(basicBackground);
+        panel.setLayout(null);
+
+        JLabel newHLabel = new JLabel("<html>The barkeeper offers<br> you a pint! <html>");
+        newHLabel.setFont(new Font("Press Start 2P", Font.PLAIN, 35));
+        newHLabel.setBounds(80, 50, 1000, 100);
+
+        JLabel changeTo = new JLabel("You can change to one of your bottles :");
+        changeTo.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
+        changeTo.setBounds(80, 300, 1000, 100);
+
+        JLabel itemStats = new JLabel(
+            "<html>Name: " + newH.getName() +
+            ",  Level: " + newH.getLevel() +
+            "<br>Heal amount: " + newH.getHealAmount() +
+            "<html>"
+        );
+        itemStats.setFont(new Font("Press Start 2P", Font.PLAIN, 24));
+        itemStats.setBounds(80, 200, 1000, 100);
+
+        int buttonWidth = holyBierGame.getWidth()/3 - holyBierGame.getHeight()/30;
+        int buttonHeight = holyBierGame.getHeight()/3;
+        int buttonY = holyBierGame.getHeight() * 3/5;
+
+        JButton choice1 = new JButton(player.getHeal(0).getName());
+        choice1.setBounds(holyBierGame.getWidth()/70, buttonY, buttonWidth, buttonHeight);
+        choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 22));
+        JButton choice2 = new JButton(player.getHeal(1).getName());
+        choice2.setBounds(2 * holyBierGame.getWidth()/70 + buttonWidth, buttonY, buttonWidth, buttonHeight);
+        choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 22));
+        JButton choice3 = new JButton(player.getHeal(2).getName());
+        choice3.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
+        choice3.setFont(new Font("Press Start 2P", Font.PLAIN, 22));
+
+        panel.add(itemStats);
+        panel.add(choice1);
+        panel.add(choice2);
+        panel.add(choice3);
+        panel.add(changeTo);
+        panel.add(newHLabel);
+
+        holyBierGame.add(panel);
+
+        choice1.addActionListener((ActionEvent e) -> {
+            player.changeHeal(0, newH);
+            reload();
+            PathChose();
+        });
+        
+        choice2.addActionListener((ActionEvent e) -> {
+            player.changeHeal(1, newH);
+            reload();
+            PathChose();
+        });
+        
+        choice3.addActionListener((ActionEvent e) -> {
+            player.changeHeal(2, newH);
+            reload();
+            PathChose();
+        });
 
     }
 
     void youDied() {
-
+        JLabel youDied = new JLabel(
+            "<html>You died! :( <html>"
+        );
+        reload();
+        textScreen(youDied);
     }
 
     Item generateNewItem() {

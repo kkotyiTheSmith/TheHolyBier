@@ -1,4 +1,7 @@
 import java.util.Random;
+import java.io.*;
+import java.util.*;
+import java.lang.Math.*;
 
 class Boss extends GCharacter{
     String name;

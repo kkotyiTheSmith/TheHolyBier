@@ -1,6 +1,3 @@
-import java.io.*;
-import java.util.*;
-import java.lang.Math.*;
 
 public class Player extends GCharacter {
     Item[] items;
@@ -29,6 +26,10 @@ public class Player extends GCharacter {
 
     long getCurrentDamage(Item item) { //TODO J- make a specialization of f so it takes into conideration
         return damage;                 //passives, weaknesses and the weapon the player atacks with.
+    }
+
+    Item getItem(int n) {
+        return items[n];
     }
 
     public Player() {
@@ -62,11 +63,15 @@ public class Player extends GCharacter {
         return heals[slot];
     }
 
-        //overriting (dont remember name of this in OOP)
-        void lowerHp(int dmg) {
-            this.health -= (dmg - (armor + items[0].armor + items[1].armor + items[2].armor));
-            if (this.health < 0) {
-                this.health = 0;
-            }
+    void changeHeal(int n, Heal h) {
+        heals[n] = h;
+    }
+
+    //overriting (dont remember name of this in OOP)
+    void lowerHp(int dmg) {
+        this.health -= (dmg - (armor + items[0].armor + items[1].armor + items[2].armor));
+        if (this.health < 0) {
+            this.health = 0;
         }
+    }
 }

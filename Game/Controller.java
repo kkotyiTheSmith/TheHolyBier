@@ -104,14 +104,15 @@ class Controller {
         int buttonX = holyBierGame.getWidth() * 2/3;
 
         Item newItem = generateNewItem();
+        Heal newHeal = player.heals[0].generateNewHeal();
 
-        JButton itemRoom = new JButton("<html>Item room\n Cost: " + newItem.getCost());
+        JButton itemRoom = new JButton("<html>Item room\n Cost: " + newItem.getCost() + "<html>");
         itemRoom.setBounds(buttonX, holyBierGame.getHeight()/70, buttonWidth, buttonHeight);
         itemRoom.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
         JButton bossRoom = new JButton("Boss room");
         bossRoom.setBounds(buttonX, 2 *holyBierGame.getHeight()/70 + buttonHeight, buttonWidth, buttonHeight);
         bossRoom.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
-        JButton pubRoom = new JButton("The Pub!");
+        JButton pubRoom = new JButton("<html>The Pub!\n Cost" + newHeal.getCost() + "<html>");
         pubRoom.setBounds(buttonX, 3 * holyBierGame.getHeight()/70 + 2 * buttonHeight, buttonWidth, buttonHeight);
         pubRoom.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
@@ -135,16 +136,11 @@ class Controller {
         
         pubRoom.addActionListener((ActionEvent e) -> {
             reload();
-            thePub();
+            thePub(newHeal);
         });
     }
 
     void itemRoomScene(Item newItem) {
-        if (player.getHealth() <= 0) {
-            youDied();
-        } else if (boss !=null && boss.getHealth() <= 0) {
-            // TODO for K - killed the boss screen
-        }
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
@@ -261,8 +257,70 @@ class Controller {
         });
     }
 
-    void thePub() { // TODO for K - Create the pub.
+    void thePub(Heal newHeal) { // TODO for K - Create the pub.
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
+        panel.setBackground(basicBackground);
+        panel.setLayout(null);
 
+        JLabel newHealLabel = new JLabel("You found a new item!");
+        newHealLabel.setFont(new Font("Press Start 2P", Font.PLAIN, 40));
+        newHealLabel.setBounds(80, 50, 1000, 100);
+
+        JLabel changeTo = new JLabel("You can change to one of your items :");
+        changeTo.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
+        changeTo.setBounds(80, 300, 1000, 100);
+
+        JLabel itemStats = new JLabel(
+            "<html>Name: " + "Beer" + // TODO give names to beer
+            ",  Level: " + "Beer" + // TODO give level to beer
+            "<br>Healregen: " + newHeal.getHealAmount() +
+            ",  Crit chance: " + "   " + // TODO
+            "<html>"
+        );
+        itemStats.setFont(new Font("Press Start 2P", Font.PLAIN, 24));
+        itemStats.setBounds(80, 200, 1000, 100);
+
+        int buttonWidth = holyBierGame.getWidth()/3 - holyBierGame.getHeight()/30;
+        int buttonHeight = holyBierGame.getHeight()/3;
+        int buttonY = holyBierGame.getHeight() * 3/5;
+
+        JButton choice1 = new JButton(player.getHeal(0).getName());
+        choice1.setBounds(holyBierGame.getWidth()/70, buttonY, buttonWidth, buttonHeight);
+        choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+        JButton choice2 = new JButton(player.getHeal(0).getName());
+        choice2.setBounds(2 * holyBierGame.getWidth()/70 + buttonWidth, buttonY, buttonWidth, buttonHeight);
+        choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+        JButton choice3 = new JButton(player.getHeal(0).getName());
+        choice3.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
+        choice3.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+
+        panel.add(itemStats);
+        panel.add(choice1);
+        panel.add(choice2);
+        panel.add(choice3);
+        panel.add(changeTo);
+        panel.add(newHealLabel);
+
+        holyBierGame.add(panel);
+
+        choice1.addActionListener((ActionEvent e) -> {
+            player.changeHeal(0, newHeal);
+            reload();
+            PathChose();
+        });
+        
+        choice2.addActionListener((ActionEvent e) -> {
+            player.changeHeal(1, newHeal);
+            reload();
+            PathChose();
+        });
+        
+        choice3.addActionListener((ActionEvent e) -> {
+            player.changeHeal(2, newHeal);
+            reload();
+            PathChose();
+        });
     }
 
     void youDied() {

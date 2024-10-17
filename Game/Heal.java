@@ -16,12 +16,17 @@ abstract class Heal {
     Beer generateNewHeal() {
         return new Beer();
     }
+
+    String getName() {
+        return this.name;
+    }
 }
 
 class EmptyBottle extends Heal {
     public EmptyBottle() {
         this.cost = 0;
         this.healAmount = 0;
+        this.name = "EmptyBottle";
     }
 }
 

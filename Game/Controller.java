@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 import javax.swing.*;
 
 class Controller {
@@ -102,7 +103,7 @@ class Controller {
         int buttonHeight = holyBierGame.getHeight()/3 - holyBierGame.getHeight()/30;
         int buttonX = holyBierGame.getWidth() * 2/3;
 
-        Item newItem = player.items[0].generateNewItem();
+        Item newItem = generateNewItem();
 
         JButton itemRoom = new JButton("<html>Item room\n Cost: " + newItem.getCost());
         itemRoom.setBounds(buttonX, holyBierGame.getHeight()/70, buttonWidth, buttonHeight);
@@ -244,7 +245,7 @@ class Controller {
 
         heal.addActionListener((ActionEvent e) -> {
             reload();
-            player.increaseHealt(10); // TODO for K - change to designed mechanic later
+            player.increaseHealth(10); // TODO for K - change to designed mechanic later
             boss.dealDamageTo(boss.getCurrentDamage(), player);
             bossRoomScene();
         });
@@ -266,6 +267,24 @@ class Controller {
 
     void youDied() {
 
+    }
+
+    Item generateNewItem() {
+        switch(new Random().nextInt(4)){
+            case 0 -> { 
+                return new Sword();
+            }
+            case 1 -> { 
+                return new Axe();
+            }
+            case 2 -> { 
+                return new Grenade();
+            }
+            case 3 -> { 
+                return new Spear();
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {

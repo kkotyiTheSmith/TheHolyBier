@@ -16,6 +16,14 @@ abstract class Item {
     Boolean doubleDmg;
     Boolean lifeSteal;
 
+    long getHp() {
+        return hp;
+    }
+
+    long getArmor() {
+        return armor;
+    }
+
     String getName() {
         return this.name;
     }

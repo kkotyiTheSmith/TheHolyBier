@@ -18,6 +18,7 @@ class Controller {
     Color basicBackground = new Color(197, 165, 94); 
     Player player = new Player();
     Boss boss;
+    boolean youDied = false;
 
     void reload() { // Used when entering a new scene.
         holyBierGame.getContentPane().removeAll();
@@ -90,8 +91,14 @@ class Controller {
         panel.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                reload();
-                PathChose();
+                if (!youDied) {
+                    reload();
+                    PathChose();
+                } else {
+                    reload();
+                    holyBierGame.dispose();
+                }
+                
             }
         });
     }
@@ -104,7 +111,7 @@ class Controller {
 
         JLabel stats = new JLabel(
             "<html>Level: " + player.getLevel() +
-            "<br>Healt: " + player.getHealth() +
+            "<br>Healt: " + player.getHealth() + "/" + player.getMaxHp() +
             "<br>Damage: " + player.getCurrentDamage() +
             "<br>Gold: " + player.getGold() +
             "<html>"
@@ -185,7 +192,6 @@ class Controller {
             "<html>Name: " + newI.getName() +
             ",  Level: " + newI.getLevel() +
             "<br>Damage: " + newI.getDamage() +
-            ",  Crit chance: " + newI.getCritChance() +
             "<html>"
         );
         itemStats.setFont(new Font("Press Start 2P", Font.PLAIN, 24));
@@ -195,15 +201,36 @@ class Controller {
         int buttonHeight = holyBierGame.getHeight()/3;
         int buttonY = holyBierGame.getHeight() * 3/5;
 
-        JButton choice1 = new JButton(player.getItem(0).getName());
+        JButton choice1 = new JButton(
+            "<html>Name: " + player.getItem(0).getName() +
+            ",  Level: " + player.getItem(0).getLevel() +
+            "<br>Damage: " + player.getItem(0).getDamage() +
+            ",  Health: " + player.getItem(0).getHp() +
+            "<br>Armor: " + player.getItem(0).getArmor() +
+            "<html>"
+        );
         choice1.setBounds(holyBierGame.getWidth()/70, buttonY, buttonWidth, buttonHeight);
-        choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
-        JButton choice2 = new JButton(player.getItem(1).getName());
+        choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
+        JButton choice2 = new JButton(
+            "<html>Name: " + player.getItem(1).getName() +
+            ",  Level: " + player.getItem(1).getLevel() +
+            "<br>Damage: " + player.getItem(1).getDamage() +
+            ",  Health: " + player.getItem(0).getHp() +
+            "<br>Armor: " + player.getItem(0).getArmor() +
+            "<html>"
+        );
         choice2.setBounds(2 * holyBierGame.getWidth()/70 + buttonWidth, buttonY, buttonWidth, buttonHeight);
-        choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
-        JButton choice3 = new JButton(player.getItem(2).getName());
+        choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
+        JButton choice3 = new JButton(
+            "<html>Name: " + player.getItem(2).getName() +
+            ",  Level: " + player.getItem(2).getLevel() +
+            "<br>Damage: " + player.getItem(2).getDamage() +
+            ",  Health: " + player.getItem(0).getHp() +
+            "<br>Armor: " + player.getItem(0).getArmor() +
+            "<html>"
+        );
         choice3.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
-        choice3.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
+        choice3.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
 
         panel.add(itemStats);
         panel.add(choice1);
@@ -256,7 +283,7 @@ class Controller {
         JLabel statsPlayer = new JLabel(
             "<html>Player stats: " +
             "Level: " + player.getLevel() +
-            "<br>Healt: " + player.getHealth() +
+            "<br>Healt: " + player.getHealth() + "/" + player.getMaxHp() +
             "<br>Damage: " + player.getCurrentDamage() +
             "<html>"
         );
@@ -344,15 +371,30 @@ class Controller {
         int buttonHeight = holyBierGame.getHeight()/3;
         int buttonY = holyBierGame.getHeight() * 3/5;
 
-        JButton choice1 = new JButton(player.getItem(0).getName());
+        JButton choice1 = new JButton(
+            "<html>Name: " + player.getItem(0).getName() +
+            ",  Level: " + player.getItem(0).getLevel() +
+            "<br>Damage: " + player.getItem(0).getDamage() +
+            "<html>"
+        );
         choice1.setBounds(holyBierGame.getWidth()/70, buttonY, buttonWidth, buttonHeight);
         choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
-        JButton choice2 = new JButton(player.getItem(1).getName());
+        JButton choice2 = new JButton(
+            "<html>Name: " + player.getItem(1).getName() +
+            ",  Level: " + player.getItem(1).getLevel() +
+            "<br>Damage: " + player.getItem(1).getDamage() +
+            "<html>"
+        );
         choice2.setBounds(2 * holyBierGame.getWidth()/70 + buttonWidth, buttonY, buttonWidth, buttonHeight);
         choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
         
-        JButton choice3 = new JButton(player.getItem(2).getName());
+        JButton choice3 = new JButton(
+            "<html>Name: " + player.getItem(2).getName() +
+            ",  Level: " + player.getItem(2).getLevel() +
+            "<br>Damage: " + player.getItem(2).getDamage() +
+            "<html>"
+        );
         choice3.setBounds(3 * holyBierGame.getWidth()/70 + 2 * buttonWidth, buttonY, buttonWidth, buttonHeight);
         choice3.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
@@ -473,11 +515,12 @@ class Controller {
     }
 
     void youDied() {
-        JLabel youDied = new JLabel(
+        youDied = true;
+        JLabel youDiedL = new JLabel(
             "<html>You died! :( <html>"
         );
         reload();
-        textScreen(youDied); // TODO dont return to path chose
+        textScreen(youDiedL); // TODO dont return to path chose
     }
 
     Item generateNewItem() {

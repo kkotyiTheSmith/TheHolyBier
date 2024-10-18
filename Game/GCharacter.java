@@ -6,6 +6,10 @@ abstract class GCharacter {
 
     long getLevel() {
         return level;
+        /*
+         * return *formula;
+         * level = *formula;
+         */
     }
 
     long getHp() { // Never used, honestly I don't get why we need this.
@@ -17,7 +21,7 @@ abstract class GCharacter {
     }
     
     long getCurrentDamage() {
-        return damage;
+        return damage + getLevel();
     }
 
     void lowerHp(long dmg) {

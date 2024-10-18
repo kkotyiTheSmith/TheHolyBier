@@ -70,7 +70,7 @@ public class Player extends GCharacter {
 
         currXp = 0;
         nextLevel = Math.round((Math.pow(Math.E, level)-1) * Math.pow(10,4) / 75);
-        gold = 0;        
+        gold = 100;        
     }
 
     void changeItem(int n, Item i) {

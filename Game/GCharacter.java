@@ -2,26 +2,22 @@ abstract class GCharacter {
     protected long level;
     protected long health;
     protected long hp;
-    protected long damage; 
+    protected long damage;
 
-    long getLevel() {
+    long getLevel() { 
         return level;
-        /*
-         * return *formula;
-         * level = *formula;
-         */
     }
 
-    long getHp() { // Never used, honestly I don't get why we need this.
+    long getHp() { // used for dissplaying the hp of the boss 
+        return hp;
+    }
+
+    long getHealth() { // used for dissplaying the health of the boss
         return health;
     }
 
-    long getHealth() {
-        return health;
-    }
-    
     long getCurrentDamage() {
-        return damage + getLevel();
+        return damage;
     }
 
     void lowerHp(long dmg) {

@@ -1,9 +1,14 @@
 import java.util.Random;
 
 class Boss extends GCharacter{
-    String name;
-    long xpWorth; // both should be int
-    long coinWorth;
+    protected String name;
+    /*protected*/int xpWorth;
+    /*protected*/int coinWorth;
+
+    /*
+    String weak;
+    String strong;
+    */
 
     String getName() {
         return name;
@@ -17,30 +22,61 @@ class Boss extends GCharacter{
         return (int) coinWorth;
     }
 
+    /*
+    String getWeakness() {
+        return weak;
+    }
 
-    public Boss() { // TODO for J - Generate a new random boss here.
+    String getStrength() {
+        return strong;
+    }
+
+    */
+
+    //overriding
+    void dealDamageTo(long dmg, Player character) {
+        long totalDmg = dmg - character.getMaxArmor();
+        if (totalDmg < 0) {
+            totalDmg = 0;
+        }
+        character.lowerHp(totalDmg);
+    }
+
+
+    public Boss() {
 
         Random rand = new Random();
 
-        name = "Test Boss";
-        level = 1; //getRoomLevel(); // Have to create a function which returns the level of the room the boss is in;
-                        // or just a variable that can be accesed by all programs.
+        level = Controller.level;
+        name = "Boss" + level;
+        /*
+        weak = "sword";
+        strong = "spear";
+        */
 
-        int randNum = rand.nextInt(10) + 100;
-        hp = Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
-        health = 100;//hp;
+        int randNum = rand.nextInt(10) + 200;
+        hp = Math.round((Math.pow(Math.E, 0.04*level)-1) * randNum * Math.pow(10,4) * 1.75 /100);
+        health = hp;
 
-        randNum = rand.nextInt(10) + 100;
-        damage = 100;//Math.round((Math.pow(Math.E, level)-1) * randNum * Math.pow(10,4) / 75);
+        randNum = rand.nextInt(10) + 200;
+        damage = Math.round((Math.pow(Math.E, 0.05*level)-1) * randNum * Math.pow(10,4) / 250);
 
-        xpWorth = (damage + hp) / 2;
+        xpWorth = Math.round((damage + hp) / 5);
         coinWorth = 10;
 
-        if (level % 20 == 0){
+        if (level % 25 == 0 && !(level %  100 == 0)){
+            name = name + " :|";
             hp = hp * 2;
             damage = damage * 2;
-            xpWorth = xpWorth * 3;
-            coinWorth = coinWorth * 3;
+            xpWorth = xpWorth * 2;
+            coinWorth = coinWorth * 2;
+
+        } else if (level %  100 == 0) {
+            name = name + " }:(";
+            hp = hp * 4;
+            damage = damage * 4;
+            xpWorth = xpWorth * 2;
+            coinWorth = coinWorth * 2;
         }
     }
 

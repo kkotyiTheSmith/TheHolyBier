@@ -1,32 +1,45 @@
+import java.util.*;
 
 public class Player extends GCharacter {
     Item[] items;
     Heal[] heals;
 
-    protected long maxHp;
-    protected long maxArmor;
+    protected long maxHp; // Total (though max) amount of hp the player has when adding his and his weapons' hp.
+    protected long maxArmor; // Total (though max) amount of armor the player has when adding his and his weapons' armor.
     protected long armor;
-    protected long nextLevel;
-    protected long currXp;
-    protected int gold; // Changed to int, 
+    protected long nextLevel; // Xp needed for the next level.
+    protected long currXp; // Amount of Xp the player has.
+    protected int gold;
 
-    long getMaxHp() { // No idea what this does
+
+    long getMaxHp() { 
         return maxHp;
     }
+    void setMaxHp() {
+        maxHp = hp + items[0].hp + items[1].hp + items[2].hp; 
+    }
 
-    long getMaxArmor() { // ?
+    long getMaxArmor() {
         return maxArmor;
     }
 
-    long getArmor() { // ?
+    void setMaxArmor() {
+        maxArmor = armor + items[0].armor + items[1].armor + items[2].armor;
+    }
+
+    long getDamage() {
+        return damage;
+    }
+
+    long getArmor() { // Used when displaying stats
         return armor;
     }
 
-    long getNextLevel() { // ?
+    long getNextLevel() { // Used when displaying stats
         return nextLevel;
     }
 
-    long getCurrXp() { // ?
+    long getCurrXp() { // Used when displaying stats
         return currXp;
     }
 
@@ -34,8 +47,54 @@ public class Player extends GCharacter {
         return gold;
     }
     
-    long getCurrentDamage(Item item) { //TODO J- make a specialization of f so it takes into conideration
-        return damage;                 //passives, weaknesses and the weapon the player atacks with.
+    //overriding
+    long getCurrentDamage(Item item, Boss boss) {
+        
+        Random rand = new Random();
+        int randNum;
+
+        long totalDamage = item.getDamage();
+        /*
+        String weakness = boss.getWeakness();
+        String strength = boss.getStrength();
+        String itemType = item.getType();
+
+        //Typing system
+        if(strength.equalsIgnoreCase(itemType)){
+            totalDamage = totalDamage * (2/3);
+        } else if(weakness.equalsIgnoreCase(itemType)){
+            totalDamage = totalDamage * (3/2);
+        }
+        */
+        totalDamage = totalDamage + damage;
+
+        //Unique Items mechanics
+        if (item.doubleDmg){
+            randNum = rand.nextInt(100)+1;
+            if (randNum <= 80) {
+                totalDamage = totalDamage*2;
+            }
+
+        } else if (item.oneShot){
+            randNum = rand.nextInt(100)+1;
+            if (randNum <= 20) {
+                totalDamage = boss.getHp();
+            }
+
+        } else if (item.lifeSteal){
+            health = Math.round(health + (totalDamage*0.25));
+            if (health > maxHp) {
+                health = maxHp;
+            }
+        }
+
+        //Adding critical chance to the atack
+        randNum = rand.nextInt(100)+1;
+
+        if(randNum <= item.CRIT){
+            totalDamage = totalDamage * (3/2);
+        }
+        return totalDamage;                 
     } 
 
     boolean decreaseGold(int n) {
@@ -61,16 +120,16 @@ public class Player extends GCharacter {
         heals[2] = new EmptyBottle();
 
         level = 1;
-        health = 250;
-        maxHp = health + items[0].hp + items[1].hp + items[2].hp;
+        hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5);;
+        maxHp = hp + items[0].hp + items[1].hp + items[2].hp;
         health = maxHp;
-        armor = 250;
-        maxArmor = armor + items[0].armor + items[1].armor + items[2].armor;
-        damage = 10;
+        armor = Math.round(hp*0.1);
+        maxArmor = armor + items[0].armor + items[1].armor + items[2].armor;;
+        damage = Math.round((Math.pow(Math.E, 0.04 * (level)) - 1) * Math.pow(10,4))*2;
 
         currXp = 0;
-        nextLevel = Math.round((Math.pow(Math.E, level)-1) * Math.pow(10,4) / 75);
-        gold = 100;        
+        nextLevel = Math.round((Math.pow(Math.E, 0.03*level)-1) * Math.pow(10,4) / 40);
+        gold = 5;        
     }
 
     void changeItem(int n, Item i) {
@@ -89,17 +148,21 @@ public class Player extends GCharacter {
         return heals[slot];
     }
 
-    void increaseHealth() { // This stays this way!
+    void increaseHealth(long playerTotalHp) { // This stays this way!
         for (int i = 0; i < 3; i++) {
-            if (heals[i].getHealAmount() > 0) {
-                this.health += heals[i].getHealAmount();
+            if (heals[i].getHealAmount(playerTotalHp) > 0) {
+                this.health += heals[i].getHealAmount(playerTotalHp);
+                if (this.health > maxHp) {
+                    this.health = maxHp;
+                }
+
                 heals[i] = new EmptyBottle();
                 System.out.println(heals[0] + "...." + heals[1] + "...." + heals[2]);
                 break;
             }
         }
     }
-
+    /*
     void increaseGold(int g){ // This already works!
         gold += g;
     }
@@ -107,29 +170,35 @@ public class Player extends GCharacter {
     void incereaseXP(int xp) { // This already works!
         currXp += xp;
     }
+    */
 
-    void playerReward(long xpWorth, int goldWorth) { // TODO
+
+    void playerReward(long xpWorth, int goldWorth) {
         boolean lvlUp = false;
         long xp = xpWorth;
-        long oldHp = health;
-
+        long oldHp = hp;
+        
+        // Use a while loop so the player keeps leveling up if it can gain more than one level with the amount of Xp gained.
         currXp = currXp + xp;
         while (currXp >= nextLevel) {
-            xp = xp - (nextLevel- currXp);
+            currXp = xp - (nextLevel- currXp);
             level = level  + 1;
-            nextLevel = Math.round((Math.pow(Math.E, level)-1) * Math.pow(10,4) / 75);
-            currXp = 0;
+            nextLevel = Math.round((Math.pow(Math.E, 0.045*level)-1) * Math.pow(10,4)*1.2);
             lvlUp = true;
         }
         
+        // Update player stats if the player leveled up
         if (lvlUp) {
             currXp = xp;
 
-            health = Math.round((Math.pow(Math.E, 0.05 * (level+5)) - 1) * Math.pow(10,4));
-            armor = Math.round((Math.pow(Math.E, 0.05 * (level+3)) - 1) * Math.pow(10,4) / 10);
-            damage = Math.round((Math.pow(Math.E, 0.05 * (level)) - 1) * Math.pow(10,4));
-            maxHp = health + items[0].hp + items[1].hp + items[2].hp;
-            // health = health + ((hp-oldHp) / 4);
+            hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5);
+            armor = Math.round(hp*0.05);
+            damage = Math.round((Math.pow(Math.E, 0.04 * (level)) - 1) * Math.pow(10,4));
+            maxHp = hp + items[0].hp + items[1].hp + items[2].hp;
+            health = health + ((hp-oldHp)/2);
+            if (health > maxHp) {
+                health = maxHp;
+            }
             maxArmor = armor + items[0].armor + items[1].armor + items[2].armor;
 
         }

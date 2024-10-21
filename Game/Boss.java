@@ -67,6 +67,7 @@ class Boss extends GCharacter{
         if (level % 25 == 0 && !(level %  100 == 0)){
             name = name + " :|";
             hp = hp * 2;
+            health = hp;
             damage = damage * 2;
             xpWorth = xpWorth * 2;
             coinWorth = coinWorth * 2;
@@ -74,6 +75,7 @@ class Boss extends GCharacter{
         } else if (level %  100 == 0) {
             name = name + " }:(";
             hp = hp * 4;
+            health = hp;
             damage = damage * 4;
             xpWorth = xpWorth * 2;
             coinWorth = coinWorth * 2;

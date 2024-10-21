@@ -97,7 +97,7 @@ class Sword extends Item {
     public Sword() {
         name = "Sword";
         type = "sword";
-        level = Controller.level; // create variable that keeps track of levels in main program for this
+        level = Controller.level; // Created variable that keeps track of levels in main program for this.
         unique = false;
 
         oneShot = false;

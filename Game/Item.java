@@ -113,7 +113,7 @@ class Sword extends Item {
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueSword";
+            name = "uSword";
             lifeSteal = true;
         }
 
@@ -147,7 +147,7 @@ class Axe extends Item {
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueAxe";
+            name = "uAxe";
             doubleDmg = true;
         }
     }
@@ -180,7 +180,7 @@ class Grenade extends Item {
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueGrenade";
+            name = "uGrenade";
             oneShot = true;
         }
     }
@@ -213,7 +213,7 @@ class Spear extends Item {
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueSpear";
+            name = "uSpear";
             damageNull = true;
         }
     }

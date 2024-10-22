@@ -31,10 +31,6 @@ public class Player extends GCharacter {
         return damage;
     }
 
-    long getArmor() { // Used when displaying stats
-        return armor;
-    }
-
     long getNextLevel() { // Used when displaying stats
         return nextLevel;
     }
@@ -120,11 +116,11 @@ public class Player extends GCharacter {
         heals[2] = new EmptyBottle();
 
         level = 1;
-        hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5);;
+        hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5);
         maxHp = hp + items[0].hp + items[1].hp + items[2].hp;
         health = maxHp;
         armor = Math.round(hp*0.1);
-        maxArmor = armor + items[0].armor + items[1].armor + items[2].armor;;
+        maxArmor = armor + items[0].armor + items[1].armor + items[2].armor;
         damage = Math.round((Math.pow(Math.E, 0.04 * (level)) - 1) * Math.pow(10,4))*2;
 
         currXp = 0;

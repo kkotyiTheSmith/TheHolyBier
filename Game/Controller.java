@@ -217,14 +217,14 @@ class Controller {
 
         JLabel itemStats = new JLabel(
             "<html>Name: " + newI.getName() +
-            ",  Level: " + newI.getLevel() +
+            "<br>Level: " + newI.getLevel() +
             "<br>Damage: " + newI.getDamage() +
             "<br>Hp: " + newI.getHp() +
             "<br>Armor: " + newI.getArmor() +
             "<html>"
         );
         itemStats.setFont(new Font("Press Start 2P", Font.PLAIN, 24));
-        itemStats.setBounds(80, 200, 1000, 100);
+        itemStats.setBounds(80, 150, 1000, 200);
 
         int buttonWidth = holyBierGame.getWidth()/3 - holyBierGame.getHeight()/30;
         int buttonHeight = holyBierGame.getHeight()/3;
@@ -232,9 +232,9 @@ class Controller {
 
         JButton choice1 = new JButton(
             "<html>Name: " + player.getItem(0).getName() +
-            ",  Level: " + player.getItem(0).getLevel() +
+            "<br>Level: " + player.getItem(0).getLevel() +
             "<br>Damage: " + player.getItem(0).getDamage() +
-            ",  Hp: " + player.getItem(0).getHp() +
+            "<br>Hp: " + player.getItem(0).getHp() +
             "<br>Armor: " + player.getItem(0).getArmor() +
             "<html>"
         );
@@ -242,9 +242,9 @@ class Controller {
         choice1.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
         JButton choice2 = new JButton(
             "<html>Name: " + player.getItem(1).getName() +
-            ",  Level: " + player.getItem(1).getLevel() +
+            "<br>Level: " + player.getItem(1).getLevel() +
             "<br>Damage: " + player.getItem(1).getDamage() +
-            ",  Hp: " + player.getItem(1).getHp() +
+            "<br>Hp: " + player.getItem(1).getHp() +
             "<br>Armor: " + player.getItem(1).getArmor() +
             "<html>"
         );
@@ -252,9 +252,9 @@ class Controller {
         choice2.setFont(new Font("Press Start 2P", Font.PLAIN, 19));
         JButton choice3 = new JButton(
             "<html>Name: " + player.getItem(2).getName() +
-            ",  Level: " + player.getItem(2).getLevel() +
+            "<br>Level: " + player.getItem(2).getLevel() +
             "<br>Damage: " + player.getItem(2).getDamage() +
-            ",  Hp: " + player.getItem(2).getHp() +
+            "<br>Hp: " + player.getItem(2).getHp() +
             "<br>Armor: " + player.getItem(2).getArmor() +
             "<html>"
         );

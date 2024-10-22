@@ -92,6 +92,7 @@ class Sword extends Item {
         level = Controller.level; // create variable that keeps track of levels in main program for this
         //unique = false;
 
+
         oneShot = false;
         damageNull = false;
         doubleDmg = false;

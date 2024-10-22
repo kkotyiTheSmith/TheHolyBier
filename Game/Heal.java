@@ -2,7 +2,7 @@ import java.util.Random;
 
 abstract class Heal {
     protected int cost;
-    protected int healAmount;
+    protected int healPercentage;
     protected int level;
     String name;
 
@@ -10,7 +10,11 @@ abstract class Heal {
        return cost; 
     }
 
-    int getHealAmount() {
+    int getHealPercentage() {
+        return healPercentage;
+    }
+    long getHealAmount(long playerTotalHp) {
+        long healAmount = playerTotalHp* healPercentage / 100;
         return healAmount;
     }
 
@@ -25,12 +29,13 @@ abstract class Heal {
     int getLevel() {
         return level;
     }
+
 }
 
 class EmptyBottle extends Heal {
     public EmptyBottle() {
         this.cost = 0;
-        this.healAmount = 0;
+        this.healPercentage = 0;
         this.name = "Empty Bottle";
     }
 }
@@ -54,7 +59,7 @@ class Beer extends Heal {
         int randNum = rand.nextInt(10);
 
         name = nameArray[randNum];
-        healAmount = (rand.nextInt(6)+5) / 10 + 1;    
+        healPercentage = (rand.nextInt(10)+1) * 10;    
         cost = rand.nextInt(5)+1;
     }
 }

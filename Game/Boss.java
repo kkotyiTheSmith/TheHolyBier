@@ -2,13 +2,8 @@ import java.util.Random;
 
 class Boss extends GCharacter{
     protected String name;
-    /*protected*/int xpWorth;
-    /*protected*/int coinWorth;
-
-    /*
-    String weak;
-    String strong;
-    */
+    int xpWorth;
+    int coinWorth;
 
     String getName() {
         return name;
@@ -22,17 +17,6 @@ class Boss extends GCharacter{
         return (int) coinWorth;
     }
 
-    /*
-    String getWeakness() {
-        return weak;
-    }
-
-    String getStrength() {
-        return strong;
-    }
-
-    */
-
     void dealDamageTo(long dmg, Player character) {
         long totalDmg = dmg - character.getMaxArmor();
         if (totalDmg < 0) {
@@ -41,17 +25,12 @@ class Boss extends GCharacter{
         character.lowerHp(totalDmg);
     }
 
-
     public Boss() {
 
         Random rand = new Random();
 
         level = Controller.level;
         name = "Boss" + level;
-        /*
-        weak = "sword";
-        strong = "spear";
-        */
 
         int randNum = rand.nextInt(10) + 200;
         hp = Math.round((Math.pow(Math.E, 0.04*level)-1) * randNum * Math.pow(10,4) * 1.75 /100);

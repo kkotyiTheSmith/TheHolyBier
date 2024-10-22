@@ -43,25 +43,13 @@ public class Player extends GCharacter {
         return gold;
     }
     
-    //overriding
+    // Function getCurrentDamage() takes as parameters the item chosen by the player to atack and the boss.
     long getCurrentDamage(Item item, Boss boss) {
         
         Random rand = new Random();
         int randNum;
 
         long totalDamage = item.getDamage();
-        /*
-        String weakness = boss.getWeakness();
-        String strength = boss.getStrength();
-        String itemType = item.getType();
-
-        //Typing system
-        if(strength.equalsIgnoreCase(itemType)){
-            totalDamage = totalDamage * (2/3);
-        } else if(weakness.equalsIgnoreCase(itemType)){
-            totalDamage = totalDamage * (3/2);
-        }
-        */
         totalDamage = totalDamage + damage;
 
         //Unique Items mechanics
@@ -157,23 +145,16 @@ public class Player extends GCharacter {
             }
         }
     }
-    /*
-    void increaseGold(int g){ // This already works!
-        gold += g;
-    }
-
-    void incereaseXP(int xp) { // This already works!
-        currXp += xp;
-    }
-    */
-
 
     void playerReward(long xpWorth, int goldWorth) {
         boolean lvlUp = false;
         long xp = xpWorth;
         long oldHp = hp;
         
-        // Use a while loop so the player keeps leveling up if it can gain more than one level with the amount of Xp gained.
+        /*
+         * Use a while loop so the player keeps leveling up if it 
+         * can gain more than one level with the amount of Xp gained.
+         */
         currXp = currXp + xp;
         while (currXp >= nextLevel) {
             currXp = xp - (nextLevel- currXp);

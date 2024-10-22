@@ -30,9 +30,6 @@ abstract class GCharacter {
     void dealDamageTo(long dmg, GCharacter c) {
         c.lowerHp(dmg);
     }
-
-    
-
 }
 
 

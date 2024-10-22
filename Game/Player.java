@@ -153,7 +153,6 @@ public class Player extends GCharacter {
                 }
 
                 heals[i] = new EmptyBottle();
-                System.out.println(heals[0] + "...." + heals[1] + "...." + heals[2]);
                 break;
             }
         }

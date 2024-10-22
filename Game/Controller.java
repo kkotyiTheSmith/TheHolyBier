@@ -69,7 +69,11 @@ class Controller {
 
     void startNewGame() { // Some story and help, to introduce to new players.
         JLabel intro = new JLabel(
-            "<html>This is a RPG game. Buttons and shit my friend. But don't worry it's not skill based. Enjoy!<html>"
+            "<html>Welcome Warrior to our RPG game called The Holy Bier!"+
+            "<br><br>In this game you will fight bosses, find new items and drink delicious drinks!" +
+            " " +
+            "<br><br>Enjoy!" + 
+            "<html>"
         );
         textScreen(intro);
     }
@@ -80,7 +84,7 @@ class Controller {
         panel.setBackground(basicBackground);
         panel.setLayout(null);
 
-        l.setBounds(50, 50, 800, 500);
+        l.setBounds(50, 50, 900, 600);
         l.setBackground(Color.BLACK);
         l.setFont(new Font("Press Start 2P", Font.CENTER_BASELINE, 25));
 
@@ -118,7 +122,7 @@ class Controller {
             "<br>Gold: " + player.getGold() +
             "<html>"
         );
-        stats.setBounds(holyBierGame.getWidth()/20, holyBierGame.getHeight() * 2/3, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        stats.setBounds(holyBierGame.getWidth()/20, holyBierGame.getHeight() * 1/3, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
         stats.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
         int buttonWidth = holyBierGame.getWidth()/3;

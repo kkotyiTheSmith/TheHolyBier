@@ -33,7 +33,6 @@ class Boss extends GCharacter{
 
     */
 
-    //overriding
     void dealDamageTo(long dmg, Player character) {
         long totalDmg = dmg - character.getMaxArmor();
         if (totalDmg < 0) {

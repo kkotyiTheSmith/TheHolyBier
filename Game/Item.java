@@ -2,13 +2,13 @@ import java.util.*;
 
 abstract class Item {
     String name;
-    String type;
+    //String type;
     int level;
     long hp;
     long armor;
     long damage;
     int cost = 10;
-    boolean unique;
+    //boolean unique;
     int CRIT = 10;
 
     Boolean oneShot;
@@ -28,10 +28,6 @@ abstract class Item {
         return this.name;
     }
 
-    String getType() {
-        return type;
-    }
-
     int getLevel() {
         return level;
     }
@@ -44,11 +40,7 @@ abstract class Item {
         return cost;
     }
 
-    float getCritChance() {
-        return CRIT;
-    }
-
-    int rarityCalc() {
+    final int rarityCalc() {
         
         Random rand = new Random();
         int randNum = rand.nextInt(100)+1;
@@ -77,13 +69,13 @@ abstract class Item {
 class Hand extends Item {
     public Hand() {
         name = "Hand";
-        type = "None";
+        //type = "None";
         level = 1;
         hp = 0;
         armor = 0;
         damage = 10;
         cost = 0;
-        unique = false;
+        //unique = false;
 
         oneShot = false;
         damageNull = false;
@@ -96,9 +88,9 @@ class Hand extends Item {
 class Sword extends Item {
     public Sword() {
         name = "Sword";
-        type = "sword";
+        //type = "sword";
         level = Controller.level; // create variable that keeps track of levels in main program for this
-        unique = false;
+        //unique = false;
 
         oneShot = false;
         damageNull = false;
@@ -119,7 +111,7 @@ class Sword extends Item {
 
 
         if (extraLevel == 25) {
-            unique = true;
+            //unique = true;
             name = "uniqueSword";
             lifeSteal = true;
         }
@@ -131,9 +123,9 @@ class Sword extends Item {
 class Axe extends Item {
     public Axe() {
         name = "Axe";
-        type = "axe";
+        //type = "axe";
         level = Controller.level; // create variable that keeps track of levels in main program for this
-        unique = false;
+        //unique = false;
 
         oneShot = false;
         damageNull = false;
@@ -153,7 +145,7 @@ class Axe extends Item {
 
 
         if (extraLevel == 25) {
-            unique = true;
+            //unique = true;
             name = "uniqueAxe";
             doubleDmg = true;
         }
@@ -163,9 +155,9 @@ class Axe extends Item {
 class Grenade extends Item {
     public Grenade() {
         name = "Grenade";
-        type = "grenade";
+        //type = "grenade";
         level = Controller.level; // create variable that keeps track of levels in main program for this
-        unique = false;
+        //unique = false;
 
         oneShot = false;
         damageNull = false;
@@ -186,7 +178,7 @@ class Grenade extends Item {
         
 
         if (extraLevel == 25) {
-            unique = true;
+            //unique = true;
             name = "uniqueGrenade";
             oneShot = true;
         }
@@ -196,9 +188,9 @@ class Grenade extends Item {
 class Spear extends Item {
     public Spear() {
         name = "Spear";
-        type = "spear";
+        //type = "spear";
         level = Controller.level; // create variable that keeps track of levels in main program for this
-        unique = false;
+        //unique = false;
 
         oneShot = false;
         damageNull = false;
@@ -212,14 +204,14 @@ class Spear extends Item {
 
         randNum = rand.nextInt(11) + 125;
         hp = Math.round((Math.pow(Math.E + (Math.E  * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
-        randNum = rand.nextInt(11) + 125;
+        //randNum = rand.nextInt(11) + 125;
         armor = Math.round(hp*0.15);
         randNum = rand.nextInt(11) + 50;
         damage = Math.round((Math.pow(Math.E - (Math.E * 0.02), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
 
 
         if (extraLevel == 25) {
-            unique = true;
+            //unique = true;
             name = "uniqueSpear";
             damageNull = true;
         }

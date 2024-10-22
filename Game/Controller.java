@@ -51,12 +51,6 @@ class Controller {
         start.setBackground(Color.BLACK);
         start.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
         
-        /* // TODO delete in case of handling
-        ImagePanel newGameScreen = new ImagePanel("graphics/MainScreen/background.jpg");
-        newGameScreen.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
-        panel.add(newGameScreen);
-        */
-        
         panel.add(theHolyBierTitle);
         panel.add(start);
 
@@ -120,7 +114,7 @@ class Controller {
             "<br>Hp: " + player.getHealth() + "/" + player.getMaxHp() +
             "<br>Armor: " + player.getMaxArmor() +
             "<br>Damage: " + player.getDamage() +
-            "<br>Xp: " + player.currXp + "/" + player.nextLevel +
+            "<br>Xp: " + player.getCurrXp() + "/" + player.getNextLevel() +
             "<br>Gold: " + player.getGold() +
             "<html>"
         );
@@ -576,7 +570,7 @@ class Controller {
             "<html>"
         );
         reload();
-        textScreen(youDiedL); // TODO dont return to path chose
+        textScreen(youDiedL);
     }
 
     Item generateNewItem() {
@@ -603,12 +597,7 @@ class Controller {
         int randNum = rand.nextInt(100);
 
         if(player.getItem(0).damageNull || player.getItem(1).damageNull || player.getItem(2).damageNull) {
-            if (randNum < 50){
-                return true;
-
-            } else {
-                return false;
-            } 
+            return randNum < 50;
         } else {
             return false;
         }

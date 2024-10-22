@@ -14,15 +14,19 @@ import javax.swing.*;
  */
 
 class Controller {
-    JFrame holyBierGame = new JFrame("The Holy Bier"); // The frame with the game, this is permanent.
+    JFrame holyBierGame = new JFrame("The Holy Bier");//The frame with the game, this is permanent.
     Color basicBackground = new Color(197, 165, 94); 
     Player player = new Player();
     Boss boss;
     boolean youDied = false;
-    static int level; // Keeps track of the levels of the game so that the items and bosses can escale apropiatelly.
+    static int level; // Keeps track of the levels of the game.
     static int numOfBoss; // Keeps track of the bosses killed for the death screen and bonus.
     static int numOfItems; // Keeps track of the healing items taken for the death screen.
     static int numOfHeals; // Keeps track of the healing items taken for the death screen and bonus.
+
+    static int getLevel() {
+        return level;
+    }
 
     void reload() { // Used when entering a new scene.
     
@@ -67,11 +71,10 @@ class Controller {
         holyBierGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    void startNewGame() { // Some story and help, to introduce to new players.
+    void startNewGame() { // Some introduce to new players.
         JLabel intro = new JLabel(
             "<html>Welcome Warrior to our RPG game called The Holy Bier!"+
             "<br><br>In this game you will fight bosses, find new items and drink delicious drinks!" +
-            " " +
             "<br><br>Enjoy!" + 
             "<html>"
         );
@@ -111,7 +114,7 @@ class Controller {
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
         panel.setLayout(null);
-        level = level + 1; // Everytime the player acceses the chosePath() screen, the floor level increases. 
+        level = level + 1; // Everytime the player acceses the chosePath() screen, the floor level increases.
 
         JLabel stats = new JLabel(
             "<html>Level: " + player.getLevel() +
@@ -122,7 +125,12 @@ class Controller {
             "<br>Gold: " + player.getGold() +
             "<html>"
         );
-        stats.setBounds(holyBierGame.getWidth()/20, holyBierGame.getHeight() * 1/3, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        stats.setBounds(
+            holyBierGame.getWidth()/20, 
+            holyBierGame.getHeight() * 1/3,
+            holyBierGame.getHeight()/2,
+            holyBierGame.getWidth()/5
+        );
         stats.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
         int buttonWidth = holyBierGame.getWidth()/3;
@@ -157,10 +165,11 @@ class Controller {
             reload();
             if (player.decreaseGold(newItem.getCost())) {
                 itemRoomScene(newItem);
-                numOfItems = numOfItems + 1; // Whenever the itemRoomScene is accesed, increase the amount of items picked by one
+                // Whenever the itemRoomScene is accesed, increase the amount of items picked by one
+                numOfItems = numOfItems + 1; 
             } else {
-                
-                /* As floor level increases each time pathChose() runs,
+                /* 
+                 * As floor level increases each time pathChose() runs,
                  * but a floor hasn't beed cleared, so the level count has to be corrected
                  */
                 level = level - 1; 
@@ -192,7 +201,7 @@ class Controller {
         });
     }
 
-    void itemRoomScene(Item newI) {
+    void itemRoomScene(Item newI) { // The scene where we can swap items
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
@@ -263,7 +272,7 @@ class Controller {
 
         choice1.addActionListener((ActionEvent e) -> {
             player.changeItem(0, newI);
-            // The player max / total Hp and Armor has to be recalculated as a different object has been adquired.
+            // The player max/total Hp and Armor has to be recalculated as a different object has been adquired.
             player.setMaxHp();
             player.setMaxArmor();
             reload();
@@ -272,7 +281,7 @@ class Controller {
         
         choice2.addActionListener((ActionEvent e) -> {
             player.changeItem(1, newI);
-            // The player max / total Hp and Armor has to be recalculated as a different object has been adquired.
+            // The player max/total Hp and Armor has to be recalculated as a different object has been adquired.
             player.setMaxHp();
             player.setMaxArmor();
             reload();
@@ -281,7 +290,7 @@ class Controller {
         
         choice3.addActionListener((ActionEvent e) -> {
             player.changeItem(2, newI);
-            // The player max / total Hp and Armor has to be recalculated as a different object has been adquired.
+            // The player max/total Hp and Armor has to be recalculated as a different object has been adquired.
             player.setMaxHp();
             player.setMaxArmor();
             reload();
@@ -289,7 +298,7 @@ class Controller {
         });
     }
 
-    void bossRoomScene() {
+    void bossRoomScene() { // The boss fight scene
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
@@ -317,7 +326,12 @@ class Controller {
             "<br>Damage: " + player.getDamage() +
             "<html>"
         );
-        statsPlayer.setBounds(holyBierGame.getWidth() * 1/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsPlayer.setBounds(
+            holyBierGame.getWidth() * 1/20, 
+            holyBierGame.getHeight() * 1/5, 
+            holyBierGame.getHeight()/2, 
+            holyBierGame.getWidth()/5
+        );
         statsPlayer.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
         JLabel statsBoss = new JLabel(
@@ -328,13 +342,18 @@ class Controller {
             "<br>Damage: " + boss.getCurrentDamage() +
             "<html>"
         );
-        statsBoss.setBounds(holyBierGame.getWidth() * 11/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsBoss.setBounds(
+            holyBierGame.getWidth() * 11/20, 
+            holyBierGame.getHeight() * 1/5, 
+            holyBierGame.getHeight()/2, 
+            holyBierGame.getWidth()/5);
         statsBoss.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
         panel.add(statsBoss);
         panel.add(statsPlayer);
         panel.add(fight);
         panel.add(heal);
+
         // every 25 floors there is a special stronger boss which can't be skipped nor escaped.
         if(!(level % 25 == 0)){
             panel.add(escape);
@@ -371,7 +390,7 @@ class Controller {
         });
     }
 
-    void checkBossDeath() {
+    void checkBossDeath() { // This method checks if the boss is dead. If yes the player is rewarded.
         if (boss.getHealth() == 0) {
             reload();
             JLabel bossKilled = new JLabel(
@@ -380,17 +399,12 @@ class Controller {
             "<br><br>Experience: " + boss.getXp() + ",    Gold: " + boss.getGold() +
             "<html>"
             );
-            /*
-            player.increaseGold(boss.getGold());
-            player.incereaseXP(boss.getXp());
-            textScreen(bossKilled);
-            */
 
             player.playerReward(boss.getXp(),boss.getGold());
             // Since the stats of the player have increased, the max/ total hp and armor has  to be recalculated.
             player.setMaxHp();
             player.setMaxArmor();
-            numOfBoss = numOfBoss + 1; // Whenever the boss is actually killed, increase the boss counter by 1.
+            numOfBoss = numOfBoss + 1;//Whenever the boss is actually killed, increase the boss counter by 1.
             textScreen(bossKilled);
 
         } else {
@@ -404,7 +418,7 @@ class Controller {
         }
     }
 
-    void choseItem() {
+    void choseItem() { // This used when we fight the boss.
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
@@ -453,7 +467,12 @@ class Controller {
             "<br>Damage: " + player.getDamage() +
             "<html>"
         );
-        statsPlayer.setBounds(holyBierGame.getWidth() * 1/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsPlayer.setBounds(
+            holyBierGame.getWidth() * 1/20, 
+            holyBierGame.getHeight() * 1/5, 
+            holyBierGame.getHeight()/2, 
+            holyBierGame.getWidth()/5
+        );
         statsPlayer.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
         JLabel statsBoss = new JLabel(
@@ -464,7 +483,12 @@ class Controller {
             "<br>Damage: " + boss.getCurrentDamage() +
             "<html>"
         );
-        statsBoss.setBounds(holyBierGame.getWidth() * 11/20, holyBierGame.getHeight() * 1/5, holyBierGame.getHeight()/2, holyBierGame.getWidth()/5);
+        statsBoss.setBounds(
+            holyBierGame.getWidth() * 11/20, 
+            holyBierGame.getHeight() * 1/5, 
+            holyBierGame.getHeight()/2, 
+            holyBierGame.getWidth()/5
+        );
         statsBoss.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 
         panel.add(choice1);
@@ -477,25 +501,22 @@ class Controller {
         holyBierGame.add(panel);
 
         choice1.addActionListener((ActionEvent e) -> {
-            // Function getCurrentDamage() of player, takes as parameters the item chosen by the player to atack and the boss.
             player.dealDamageTo(player.getCurrentDamage(player.getItem(0),boss), boss);
             checkBossDeath();
         });
         
         choice2.addActionListener((ActionEvent e) -> {
-            // Function getCurrentDamage() of player, takes as parameters the item chosen by the player to atack and the boss.
             player.dealDamageTo(player.getCurrentDamage(player.getItem(1),boss), boss);
             checkBossDeath();
         });
         
         choice3.addActionListener((ActionEvent e) -> {
-            // Function getCurrentDamage() of player, takes as parameters the item chosen by the player to atack and the boss.
             player.dealDamageTo(player.getCurrentDamage(player.getItem(2),boss), boss);
             checkBossDeath();
         });
     }
 
-    void thePub(Heal newH) { 
+    void thePub(Heal newH) { // The healing item chose screen.
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, holyBierGame.getWidth(), holyBierGame.getHeight());
         panel.setBackground(basicBackground);
@@ -561,7 +582,7 @@ class Controller {
 
     }
 
-    void youDied() {
+    void youDied() { 
         youDied = true;
         JLabel youDiedL = new JLabel(
             "<html>You died! :(" +
@@ -577,7 +598,7 @@ class Controller {
         textScreen(youDiedL);
     }
 
-    Item generateNewItem() {
+    Item generateNewItem() { // This gives back a random item.
         switch(new Random().nextInt(4)){
             case 0 -> { 
                 return new Sword();
@@ -600,23 +621,25 @@ class Controller {
         Random rand = new Random();
         int randNum = rand.nextInt(100);
 
-        if(player.getItem(0).damageNull || player.getItem(1).damageNull || player.getItem(2).damageNull) {
+        if (player.getItem(0).damageNull || 
+            player.getItem(1).damageNull || 
+            player.getItem(2).damageNull) 
+        {
             return randNum < 50;
         } else {
             return false;
         }
     }
 
-    void dealBossDamageToPlayer() {
+    void dealBossDamageToPlayer() { // Deals damage under conditions.
         if (damageNullification()){
-            //random number
             boss.dealDamageTo(0, player);
             } else {
                 boss.dealDamageTo(boss.getCurrentDamage(), player);
             }
     }
 
-    long bonusCalc() {
+    long bonusCalc() { // Determining the score of the player.
         long puntuation = numOfBoss * 13 - numOfHeals * 3;
         if(puntuation < 0){
             puntuation = 0;

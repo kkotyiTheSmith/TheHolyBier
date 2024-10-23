@@ -45,7 +45,7 @@ abstract class Item {
 
         int extraLevel = 0;
 
-        if (randNum >= 81 && randNum <= 95) {
+        if (randNum >= 76 && randNum <= 95) {
 
             name = name + " 2";
             extraLevel = 10;
@@ -53,11 +53,11 @@ abstract class Item {
         } else if(randNum >= 96 && randNum <= 99) {
 
             name = name + " 3";
-            extraLevel = 15;
+            extraLevel = 20;
 
         } else if (randNum == 100) {
             
-            extraLevel = 25;
+            extraLevel = 30;
 
         }
         return extraLevel;

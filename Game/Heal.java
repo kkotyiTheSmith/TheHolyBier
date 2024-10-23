@@ -26,10 +26,6 @@ abstract class Heal {
         return name;
     }
 
-    int getLevel() {
-        return level;
-    }
-
 }
 
 class EmptyBottle extends Heal {

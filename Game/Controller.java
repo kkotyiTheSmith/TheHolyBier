@@ -12,6 +12,9 @@ import javax.swing.*;
  * This is the only start and end that is possible. (Note: closing the game doesen't bring up
  * the youDied scene).
  * 
+ * Note for testers: the first two levels should be done with just fighting a boss. It's because
+ * we wanted to raise awareness on how the boss leveling works, so the first experience for new 
+ * players (until they realize how boss leveling works) might be hard.
  */
 
 class Controller {

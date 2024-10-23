@@ -5,10 +5,6 @@ class Boss extends GCharacter{
     int xpWorth;
     int coinWorth;
 
-    String getName() {
-        return name;
-    }
-
     int getXp() {
         return (int) xpWorth;
     }

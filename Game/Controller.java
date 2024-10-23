@@ -152,9 +152,9 @@ class Controller {
         );
         stats.setBounds(
             holyBierGame.getWidth()/20, 
-            holyBierGame.getHeight() * 1/3,
-            holyBierGame.getHeight()/2,
-            holyBierGame.getWidth()/5
+            holyBierGame.getHeight() * 1/5,
+            holyBierGame.getWidth(),
+            holyBierGame.getHeight() * 4/5
         );
         stats.setFont(new Font("Press Start 2P", Font.PLAIN, 25));
 

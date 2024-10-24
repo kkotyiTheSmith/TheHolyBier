@@ -99,12 +99,12 @@ class Sword extends Item {
 
         randNum = rand.nextInt(11) + 100;
         hp = Math.round(
-            (Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75
+            (Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
         armor = Math.round(hp*0.1);
         randNum = rand.nextInt(11) + 100;                
         damage = Math.round(
-            (Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10 , 4)* 0.5 / 75
+            (Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10 , 4)* 0.5 / 7500
         );
 
         if (extraLevel == 25) {
@@ -133,12 +133,12 @@ class Axe extends Item {
 
         randNum = rand.nextInt(11) + 125;
         hp = Math.round(
-            (Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75
+            (Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
         armor = Math.round(hp*0.075);
         randNum = rand.nextInt(11) + 125;
         damage = Math.round(
-            (Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4)*0.5 / 75
+            (Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4)*0.5 / 7500
         );
 
 
@@ -166,12 +166,12 @@ class Grenade extends Item {
 
         randNum = rand.nextInt(11) + 50;
         hp = Math.round(
-            (Math.pow(Math.E - (Math.E * 0.08), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75
+            (Math.pow(Math.E - (Math.E * 0.08), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
         armor = Math.round(hp*0.025);
         randNum = rand.nextInt(11) + 150;
         damage = Math.round(
-            (Math.pow(Math.E + (Math.E * 0.04), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75
+            (Math.pow(Math.E + (Math.E * 0.04), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
 
         if (extraLevel == 25) {
@@ -198,12 +198,12 @@ class Spear extends Item {
 
         randNum = rand.nextInt(11) + 125;
         hp = Math.round(
-            (Math.pow(Math.E + (Math.E  * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75
+            (Math.pow(Math.E + (Math.E  * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
         armor = Math.round(hp*0.15);
         randNum = rand.nextInt(11) + 50;
         damage = Math.round(
-            (Math.pow(Math.E - (Math.E * 0.02), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75
+            (Math.pow(Math.E - (Math.E * 0.02), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
         
         if (extraLevel == 25) {

@@ -104,15 +104,15 @@ public class Player extends GCharacter {
         heals[2] = new EmptyBottle();
 
         level = 1;
-        hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5);
+        hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5/100);
         maxHp = hp + items[0].hp + items[1].hp + items[2].hp;
         health = maxHp;
         armor = Math.round(hp*0.1);
         maxArmor = armor + items[0].armor + items[1].armor + items[2].armor;
-        damage = Math.round((Math.pow(Math.E, 0.04 * (level)) - 1) * Math.pow(10,4))*2;
+        damage = Math.round((Math.pow(Math.E, 0.04 * (level)) - 1) * Math.pow(10,4))*2/100;
 
         currXp = 0;
-        nextLevel = Math.round((Math.pow(Math.E, 0.03*level)-1) * Math.pow(10,4) / 40);
+        nextLevel = Math.round((Math.pow(Math.E, 0.045*level)-1) * Math.pow(10,4)*1.2/100);
         gold = 5;        
     }
 
@@ -159,7 +159,7 @@ public class Player extends GCharacter {
         while (currXp >= nextLevel) {
             currXp = xp - (nextLevel- currXp);
             level = level  + 1;
-            nextLevel = Math.round((Math.pow(Math.E, 0.045*level)-1) * Math.pow(10,4)*1.2);
+            nextLevel = Math.round((Math.pow(Math.E, 0.045*level)-1) * Math.pow(10,4)*1.2/100);
             lvlUp = true;
         }
         
@@ -167,9 +167,9 @@ public class Player extends GCharacter {
         if (lvlUp) {
             currXp = xp;
 
-            hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5);
+            hp = Math.round((Math.pow(Math.E, 0.045 * (level+1)) - 1) * Math.pow(10,4)*2.5/100);
             armor = Math.round(hp*0.05);
-            damage = Math.round((Math.pow(Math.E, 0.04 * (level)) - 1) * Math.pow(10,4));
+            damage = Math.round((Math.pow(Math.E, 0.04 * (level)) - 1) * Math.pow(10,4)/100);
             maxHp = hp + items[0].hp + items[1].hp + items[2].hp;
             health = health + ((hp-oldHp)/2);
             if (health > maxHp) {

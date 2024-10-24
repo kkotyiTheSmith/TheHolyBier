@@ -49,12 +49,12 @@ abstract class Item {
 
         if (randNum >= 76 && randNum <= 95) {
 
-            name = name + " 2";
+            name = name + "2";
             extraLevel = 10;
 
         } else if(randNum >= 96 && randNum <= 99) {
 
-            name = name + " 3";
+            name = name + "3";
             extraLevel = 20;
 
         } else if (randNum == 100) {
@@ -73,7 +73,7 @@ class Hand extends Item {
         level = 1;
         hp = 0;
         armor = 0;
-        damage = 10;
+        damage = 5;
         cost = 0;
         //unique = false;
 
@@ -104,16 +104,16 @@ class Sword extends Item {
         int extraLevel = rarityCalc();
 
         randNum = rand.nextInt(11) + 100;
-        hp = Math.round((Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
+        hp = Math.round((Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500);
         armor = Math.round(hp*0.1);
         randNum = rand.nextInt(11) + 100;                
-        damage = Math.round((Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10 , 4)* 0.5 / 75);
+        damage = Math.round((Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10 , 4)* 0.5 / 7500);
 
 
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueSword";
+            name = "uSword";
             lifeSteal = true;
         }
 
@@ -139,15 +139,15 @@ class Axe extends Item {
         int extraLevel = rarityCalc();
 
         randNum = rand.nextInt(11) + 125;
-        hp = Math.round((Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
+        hp = Math.round((Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500);
         armor = Math.round(hp*0.075);
         randNum = rand.nextInt(11) + 125;
-        damage = Math.round((Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4)*0.5 / 75);
+        damage = Math.round((Math.pow(Math.E + (Math.E * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4)*0.5 / 7500);
 
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueAxe";
+            name = "uAxe";
             doubleDmg = true;
         }
     }
@@ -171,16 +171,16 @@ class Grenade extends Item {
         int extraLevel = rarityCalc();
 
         randNum = rand.nextInt(11) + 50;
-        hp = Math.round((Math.pow(Math.E - (Math.E * 0.08), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
+        hp = Math.round((Math.pow(Math.E - (Math.E * 0.08), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500);
         armor = Math.round(hp*0.025);
         randNum = rand.nextInt(11) + 150;
-        damage = Math.round((Math.pow(Math.E + (Math.E * 0.04), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
+        damage = Math.round((Math.pow(Math.E + (Math.E * 0.04), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500);
 
         
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueGrenade";
+            name = "uGrenade";
             oneShot = true;
         }
     }
@@ -204,16 +204,16 @@ class Spear extends Item {
         int extraLevel = rarityCalc();
 
         randNum = rand.nextInt(11) + 125;
-        hp = Math.round((Math.pow(Math.E + (Math.E  * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
+        hp = Math.round((Math.pow(Math.E + (Math.E  * 0.01), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500);
         //randNum = rand.nextInt(11) + 125;
         armor = Math.round(hp*0.15);
         randNum = rand.nextInt(11) + 50;
-        damage = Math.round((Math.pow(Math.E - (Math.E * 0.02), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 75);
+        damage = Math.round((Math.pow(Math.E - (Math.E * 0.02), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500);
 
 
         if (extraLevel == 25) {
             //unique = true;
-            name = "uniqueSpear";
+            name = "uSpear";
             damageNull = true;
         }
     }

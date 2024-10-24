@@ -107,8 +107,8 @@ class Sword extends Item {
             (Math.pow(Math.E, 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10 , 4)* 0.5 / 7500
         );
 
-        if (extraLevel == 25) {
-            name = "uSword";
+        if (extraLevel == 30) {
+            name = "Katana";
             lifeSteal = true;
         }
 
@@ -142,8 +142,8 @@ class Axe extends Item {
         );
 
 
-        if (extraLevel == 25) {
-            name = "uAxe";
+        if (extraLevel == 30) {
+            name = "Tomahawk";
             doubleDmg = true;
         }
     }
@@ -174,8 +174,8 @@ class Grenade extends Item {
             (Math.pow(Math.E + (Math.E * 0.04), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
 
-        if (extraLevel == 25) {
-            name = "uGrenade";
+        if (extraLevel == 30) {
+            name = "Holy H.Grenade";
             oneShot = true;
         }
     }
@@ -206,8 +206,8 @@ class Spear extends Item {
             (Math.pow(Math.E - (Math.E * 0.02), 0.04 * (level + extraLevel)) - 1) * randNum * Math.pow(10,4) / 7500
         );
         
-        if (extraLevel == 25) {
-            name = "uSpear";
+        if (extraLevel == 30) {
+            name = "Thunder Spear";
             damageNull = true;
         }
     }

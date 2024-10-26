@@ -76,7 +76,7 @@ public class Player extends GCharacter {
         randNum = rand.nextInt(100)+1;
 
         if(randNum <= item.CRIT){
-            totalDamage = totalDamage * (3/2);
+            totalDamage = Math.round(totalDamage * (3/2));
         }
         return totalDamage;                 
     } 
